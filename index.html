@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>稅務法規備考</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+  :root {
+    --ink: #1a1a18;
+    --paper: #f5f0e8;
+    --paper-dark: #ede7d9;
+    --gold: #b8960c;
+    --gold-light: #d4aa1a;
+    --moss: #2d4a2d;
+    --moss-light: #3d6b3d;
+    --moss-pale: #e8f0e8;
+    --red: #8b2020;
+    --red-pale: #fdf0f0;
+    --slate: #4a5568;
+    --border: #c8bfa8;
+    --shadow: rgba(26,26,24,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--moss);
+    color: var(--paper);
+    padding: 16px 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  .header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .header-top h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+  }
+  .header-top .subtitle {
+    font-size: .75rem;
+    opacity: .7;
+    letter-spacing: .08em;
+  }
+  .stats-bar {
+    display: flex;
+    gap: 16px;
+    font-size: .72rem;
+    opacity: .85;
+    margin-bottom: 12px;
+  }
+  .stat { display: flex; align-items: center; gap: 4px; }
+  .stat-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .dot-green { background: #6fcf6f; }
+  .dot-red   { background: #e07070; }
+  .dot-gold  { background: var(--gold-light); }
+
+  /* ── TABS ── */
+  nav.tabs {
+    display: flex;
+    gap: 0;
+  }
+  nav.tabs button {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: rgba(245,240,232,.65);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: .82rem;
+    padding: 8px 4px 10px;
+    cursor: pointer;
+    position: relative;
+    transition: color .2s;
+    letter-spacing: .04em;
+  }
+  nav.tabs button.active {
+    color: var(--paper);
+    font-weight: 700;
+  }
+  nav.tabs button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 10%; right: 10%;
+    height: 2.5px;
+    background: var(--gold-light);
+    border-radius: 2px 2px 0 0;
+  }
+
+  /* ── MAIN ── */
+  main { padding: 16px; max-width: 680px; margin: 0 auto; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── FILTER BAR ── */
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  select, .filter-btn {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: .78rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    background: white;
+    color: var(--ink);
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  select { flex: 1; min-width: 130px; }
+  .filter-btn {
+    background: var(--moss);
+    color: var(--paper);
+    border-color: var(--moss);
+    white-space: nowrap;
+  }
+  .filter-btn.active {
+    background: var(--red);
+    border-color: var(--red);
+  }
+
+  /* ── QUIZ CARD ── */
+  .quiz-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .quiz-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: .68rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    letter-spacing: .04em;
+  }
+  .tag-law  { background: var(--moss-pale); color: var(--moss); border: 1px solid #c0d4c0; }
+  .tag-year { background: var(--paper-dark); color: var(--slate); border: 1px solid var(--border); }
+  .tag-wrong { background: var(--red-pale); color: var(--red); border: 1px solid #f0c0c0; }
+
+  .quiz-q {
+    font-size: .9rem;
+    line-height: 1.75;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn {
+    text-align: left;
+    background: var(--paper);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: .84rem;
+    cursor: pointer;
+    line-height: 1.6;
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover { background: var(--moss-pale); border-color: var(--moss-light); }
+  .option-btn.correct { background: #e8f7e8; border-color: #4caf50; color: #1b5e1b; font-weight: 700; }
+  .option-btn.wrong   { background: var(--red-pale); border-color: #e07070; color: var(--red); }
+  .option-btn.reveal  { background: #f0f7e8; border-color: #8bc34a; }
+  .option-btn:disabled { cursor: default; }
+
+  .quiz-explain {
+    margin-top: 12px;
+    font-size: .8rem;
+    line-height: 1.7;
+    background: var(--paper-dark);
+    border-left: 3px solid var(--gold);
+    padding: 10px 12px;
+    border-radius: 0 6px 6px 0;
+    display: none;
+    color: var(--slate);
+  }
+  .quiz-explain.show { display: block; }
+
+  .quiz-nav {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: .82rem;
+    padding: 9px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity .15s;
+  }
+  .btn:active { opacity: .8; }
+  .btn-primary { background: var(--moss); color: var(--paper); }
+  .btn-gold    { background: var(--gold); color: white; }
+  .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--ink); }
+  .btn-red     { background: var(--red); color: white; }
+
+  .quiz-progress {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--slate);
+    margin-bottom: 14px;
+  }
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--paper-dark);
+    border-radius: 2px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--moss-light), var(--gold));
+    border-radius: 2px;
+    transition: width .3s ease;
+  }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--slate);
+  }
+  .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .empty-state p { font-size: .85rem; line-height: 1.7; }
+
+  /* ── FLASHCARD ── */
+  .fc-filter-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .fc-tag-btn {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: .75rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: white;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .fc-tag-btn.active-num  { background: #e8f0e8; border-color: var(--moss); color: var(--moss); font-weight: 700; }
+  .fc-tag-btn.active-text { background: #fff8e0; border-color: var(--gold); color: #7a6000; font-weight: 700; }
+  .fc-tag-btn.active-quiz { background: #f0e8f7; border-color: #7c4a9e; color: #5a3275; font-weight: 700; }
+  .fc-tag-btn.active-all  { background: var(--moss); border-color: var(--moss); color: white; font-weight: 700; }
+
+  .fc-scene {
+    perspective: 1000px;
+    margin-bottom: 14px;
+    height: 280px;
+  }
+  .fc-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform .5s cubic-bezier(.4,0,.2,1);
+    transform-style: preserve-3d;
+  }
+  .fc-inner.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute;
+    width: 100%; height: 100%;
+    backface-visibility: hidden;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+  .fc-front {
+    background: var(--moss);
+    color: var(--paper);
+    border: 2px solid var(--moss-light);
+  }
+  .fc-back {
+    background: white;
+    color: var(--ink);
+    border: 2px solid var(--border);
+    transform: rotateY(180deg);
+  }
+  .fc-type-badge {
+    font-size: .65rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+  }
+  .fc-front .fc-type-badge { background: rgba(255,255,255,.2); color: var(--paper); }
+  .fc-q { font-size: 1rem; line-height: 1.65; font-weight: 500; }
+  .fc-front .fc-q { color: var(--paper); }
+  .fc-hint { font-size: .7rem; opacity: .6; margin-top: 10px; }
+  .fc-a { font-size: .92rem; line-height: 1.7; color: var(--moss); font-weight: 600; white-space: pre-line; text-align: left; }
+  .fc-source { font-size: .68rem; color: var(--slate); margin-top: 8px; }
+
+  .fc-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .fc-score {
+    text-align: center;
+    font-size: .8rem;
+    color: var(--slate);
+    margin-bottom: 14px;
+  }
+  .fc-score span { font-weight: 700; }
+  .fc-score .s-know { color: var(--moss); }
+  .fc-score .s-dk   { color: var(--red); }
+
+  .fc-counter {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--slate);
+    margin-bottom: 8px;
+  }
+
+  /* ── STATUTE BROWSER (LINK CARDS) ── */
+  .law-link-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all .15s;
+    box-shadow: 0 2px 6px var(--shadow);
+  }
+  .law-link-card:hover {
+    background: var(--moss-pale);
+    border-color: var(--moss);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px var(--shadow);
+  }
+  .law-link-card:active { transform: translateY(0); }
+  .law-link-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .law-link-name {
+    flex: 1;
+    font-family: 'Noto Serif TC', serif;
+    font-size: .95rem;
+    font-weight: 600;
+    letter-spacing: .03em;
+  }
+  .law-link-arrow {
+    color: var(--gold);
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .statute-hint {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--slate);
+    margin: 12px 0 18px;
+    font-style: italic;
+  }
+
+  /* ── STATUTE BROWSER (legacy, unused) ── */
+  .law-group { margin-bottom: 18px; }
+  .law-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--moss);
+    color: var(--paper);
+    padding: 11px 14px;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-family: 'Noto Serif TC', serif;
+    font-size: .9rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+  }
+  .law-group-header .arrow { transition: transform .25s; font-size: .8rem; }
+  .law-group-header.open .arrow { transform: rotate(90deg); }
+  .chapter-list { border: 1.5px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; overflow: hidden; }
+  .chapter-item {
+    border-bottom: 1px solid var(--paper-dark);
+    overflow: hidden;
+  }
+  .chapter-item:last-child { border-bottom: none; }
+  .chapter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    cursor: pointer;
+    background: white;
+    font-size: .85rem;
+    font-weight: 500;
+    transition: background .15s;
+  }
+  .chapter-header:hover { background: var(--moss-pale); }
+  .chapter-header .ch-arrow { font-size: .7rem; color: var(--slate); transition: transform .2s; }
+  .chapter-header.open .ch-arrow { transform: rotate(90deg); }
+  .statute-content {
+    display: none;
+    padding: 12px 14px;
+    background: var(--paper);
+    border-top: 1px solid var(--paper-dark);
+    font-size: .8rem;
+    line-height: 1.85;
+    color: var(--slate);
+  }
+  .statute-content.show { display: block; }
+  .statute-item {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .statute-item:last-child { border-bottom: none; margin-bottom: 0; }
+  .statute-label {
+    font-size: .68rem;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: .05em;
+    margin-bottom: 3px;
+  }
+  .statute-text { color: var(--ink); }
+  .placeholder-note {
+    font-size: .75rem;
+    color: var(--slate);
+    font-style: italic;
+    padding: 8px 0;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: .8rem;
+    color: var(--gold);
+    letter-spacing: .12em;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .badge-count {
+    font-size: .65rem;
+    background: var(--gold);
+    color: white;
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-weight: 700;
+    margin-left: 4px;
+  }
+
+  /* ── SUMMARY PANEL ── */
+  .summary-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .82rem;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--paper-dark);
+  }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row .label { color: var(--slate); }
+  .summary-row .value { font-weight: 700; }
+  .value.green { color: var(--moss); }
+  .value.red   { color: var(--red); }
+  .value.gold  { color: var(--gold); }
+
+  .wrong-only-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .78rem;
+    color: var(--slate);
+    cursor: pointer;
+  }
+  .toggle-switch {
+    width: 36px; height: 20px;
+    background: var(--border);
+    border-radius: 10px;
+    position: relative;
+    transition: background .2s;
+  }
+  .toggle-switch.on { background: var(--red); }
+  .toggle-knob {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 16px; height: 16px;
+    background: white;
+    border-radius: 50%;
+    transition: left .2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  }
+  .toggle-switch.on .toggle-knob { left: 18px; }
+
+  @media (max-width: 400px) {
+    .fc-q { font-size: .9rem; }
+    .quiz-q { font-size: .85rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1>⚖ 稅務法規</h1>
+    <span class="subtitle">115年會計師高考備考</span>
+  </div>
+  <div class="stats-bar">
+    <span class="stat"><span class="stat-dot dot-green"></span>答對 <strong id="stat-correct">0</strong></span>
+    <span class="stat"><span class="stat-dot dot-red"></span>答錯 <strong id="stat-wrong-count">0</strong></span>
+    <span class="stat"><span class="stat-dot dot-gold"></span>字卡 <strong id="stat-fc">0</strong> 張認識</span>
+  </div>
+  <nav class="tabs">
+    <button class="active" onclick="switchTab('quiz')">📝 選擇題</button>
+    <button onclick="switchTab('flashcard')">🃏 字卡</button>
+    <button onclick="switchTab('statute')">📖 法規</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ══════════════ TAB 1: QUIZ ══════════════ -->
+<div id="tab-quiz" class="tab-panel active">
+
+  <div style="margin-bottom:14px;">
+    <div class="filter-row">
+      <select id="q-law" onchange="applyFilters()">
+        <option value="">全部法規</option>
+        <option value="所得稅法">所得稅法及所得基本稅額條例</option>
+        <option value="營業稅法">加值型及非加值型營業稅法</option>
+        <option value="土地稅法">土地稅法</option>
+        <option value="稅捐稽徵法">稅捐稽徵法及納稅者權利保護法</option>
+        <option value="遺產贈與稅法">遺產及贈與稅法</option>
+      </select>
+      <select id="q-chapter" onchange="applyFilters()">
+        <option value="">全部章節</option>
+      </select>
+    </div>
+    <div class="filter-row" style="justify-content:space-between;align-items:center;">
+      <label class="wrong-only-toggle" onclick="toggleWrongOnly()">
+        <div class="toggle-switch" id="wrong-toggle"><div class="toggle-knob"></div></div>
+        只顯示錯題
+      </label>
+      <span id="q-count-label" style="font-size:.75rem;color:var(--slate);">共 0 題</span>
+    </div>
+  </div>
+
+  <div id="quiz-area">
+    <div class="empty-state">
+      <div class="icon">📭</div>
+      <p>考古題尚未匯入<br><small style="font-size:.75rem;opacity:.7;">請上傳題目後填入 <code>QUIZ_DATA</code> 陣列</small></p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════ TAB 2: FLASHCARD ══════════════ -->
+<div id="tab-flashcard" class="tab-panel">
+
+  <div class="section-title">字卡記憶</div>
+
+  <div class="fc-filter-row">
+    <button class="fc-tag-btn active-all" onclick="setFcFilter('all',this)">全部</button>
+    <button class="fc-tag-btn" onclick="setFcFilter('數字',this)">🟢 數字</button>
+    <button class="fc-tag-btn" onclick="setFcFilter('條文',this)">🟠 條文</button>
+    <button class="fc-tag-btn" onclick="setFcFilter('考題',this)">🟣 考題</button>
+    <select id="fc-law-filter" style="font-family:'Noto Sans TC';font-size:.75rem;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;background:white;color:var(--ink);" onchange="renderFlashcard()">
+      <option value="">全部法規</option>
+      <option value="所得稅法">所得稅法</option>
+      <option value="營業稅法">營業稅法</option>
+      <option value="土地稅法">土地稅法</option>
+      <option value="稅捐稽徵法">稅捐稽徵法</option>
+      <option value="遺產贈與稅法">遺產贈與稅法</option>
+    </select>
+  </div>
+
+  <div class="fc-counter" id="fc-counter">字卡 1 / 1</div>
+  <div class="progress-bar"><div class="progress-fill" id="fc-progress" style="width:0%"></div></div>
+
+  <div class="fc-scene" onclick="flipCard()">
+    <div class="fc-inner" id="fc-inner">
+      <div class="fc-face fc-front" id="fc-front">
+        <span class="fc-type-badge" id="fc-type-badge">數字</span>
+        <div class="fc-q" id="fc-q">字卡尚未匯入</div>
+        <div class="fc-hint">點擊翻面查看答案</div>
+      </div>
+      <div class="fc-face fc-back" id="fc-back">
+        <div class="fc-a" id="fc-a">—</div>
+        <div class="fc-source" id="fc-source"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc-actions" id="fc-actions" style="display:none;">
+    <button class="btn btn-outline" onclick="fcAnswer(false)">😵 不知道</button>
+    <button class="btn btn-primary" onclick="fcAnswer(true)">✅ 知道了</button>
+  </div>
+  <div style="text-align:center;margin-bottom:12px;">
+    <button class="btn btn-outline" onclick="fcSkip(-1)" style="padding:7px 12px;font-size:.75rem;">← 上一張</button>
+    <button class="btn btn-outline" onclick="fcSkip(1)"  style="padding:7px 12px;font-size:.75rem;margin-left:6px;">下一張 →</button>
+    <button class="btn btn-gold"   onclick="shuffleFc()" style="padding:7px 12px;font-size:.75rem;margin-left:6px;">🔀 洗牌</button>
+  </div>
+
+  <div class="fc-score" id="fc-score">
+    認識：<span class="s-know" id="fc-know">0</span> 張 ／
+    不認識：<span class="s-dk" id="fc-dk">0</span> 張
+  </div>
+
+  <div id="fc-empty" class="empty-state" style="display:none;">
+    <div class="icon">🃏</div>
+    <p>字卡尚未匯入<br><small style="font-size:.75rem;opacity:.7;">請填入 <code>FLASHCARD_DATA</code> 陣列</small></p>
+  </div>
+</div>
+
+<!-- ══════════════ TAB 3: STATUTE ══════════════ -->
+<div id="tab-statute" class="tab-panel">
+  <div class="section-title">條文連結</div>
+  <p class="statute-hint">點擊跳至全國法規資料庫</p>
+  <div id="statute-tree"></div>
+</div>
+
+</main>
+
+<script>
+// ════════════════════════════════════════════════
+//  資料區 — 之後填入即可
+// ════════════════════════════════════════════════
+
+/**
+ * 選擇題資料格式：
+ * {
+ *   id: 'q001',
+ *   law: '所得稅法',          // 法規大類
+ *   chapter: '綜合所得稅',    // 章節
+ *   year: 110,
+ *   q: '題目文字',
+ *   options: ['甲','乙','丙','丁'],
+ *   answer: 0,               // 正確選項 index (0-based)
+ *   explain: '解析文字'       // 可選
+ * }
+ */
+const QUIZ_DATA = [
+  // ══ 110年 ══
+  { id:'q110_01', law:'所得稅法', chapter:'營利事業所得稅', year:110,
+    q:'依所得稅法規定，A公司為總機構在中華民國境外之營利事業，A公司百分之百持有中華民國境外B公司之股權，持有期間未滿1年。若A公司於110年出售B公司股權總價值2億元，獲利1,000萬元，交易時B公司全部股權時價2億元，但B公司投資我國境內不動產，其持有之中華民國境內房地之時價為1.5億元，下列敘述何者正確？',
+    options:['依所得稅法規定，我國無權對國外A公司之境外股權交易課稅','A公司出售該股權之所得1,000萬元應繳納我國所得稅，稅率為45%','只有B公司出售國內不動產時，我國才能依法課稅','A公司出售境外股權交易之所得應就源扣繳20%'],
+    answer:1, explain:'境外股權價值50%以上為境內房地時，視同境內房地交易，持有未滿2年稅率45%。(所得稅法§4-4③)' },
+
+  { id:'q110_02', law:'營業稅法', chapter:'稽徵', year:110,
+    q:'依加值型及非加值型營業稅法及相關規定，勞務承攬業，其銷售憑證開立時限為何？',
+    options:['簽約時','結算時','依合約所載每期應收價款時','收款時'],
+    answer:3, explain:'勞務承攬業應於收款時開立銷售憑證。' },
+
+  { id:'q110_03', law:'營業稅法', chapter:'稅額計算', year:110,
+    q:'依加值型及非加值型營業稅法及相關法規規定，甲公司將自行產製的小汽車贈與績優經銷商，應如何處理？',
+    options:['應視為銷售並按該公司該小汽車之銷貨成本開立統一發票','應視為銷售並按當時該小汽車之時價開立統一發票','應視為銷售，但免開立統一發票','免視為銷售並免開立統一發票，但應將該小汽車由銷貨成本科目轉為業務推廣費用科目入帳'],
+    answer:1, explain:'營業人以貨物贈與他人者，視為銷售，應按時價開立統一發票。(營業稅法§3③)' },
+
+  { id:'q110_04', law:'營業稅法', chapter:'稅額計算', year:110,
+    q:'依加值型及非加值型營業稅法及相關規定，下列何項進項稅額不得扣抵銷項稅額？',
+    options:['辦理員工伙食之進項稅額','業務檢討會餐費之進項稅額','員工於辦公處所使用衛生紙之進項稅額','為工程施工需要供施工人員住宿租金之進項稅額'],
+    answer:0, explain:'員工伙食屬員工福利，非直接業務用途，進項稅額不得扣抵。' },
+
+  { id:'q110_05', law:'所得稅法', chapter:'總則', year:110,
+    q:'下列何者屬中華民國境內來源所得？',
+    options:['非居住者萊恩獲配美國A公司分配之109年股利2萬美金，換算新臺幣約為58萬元','非居住者約翰在國內參加統一發票盃路跑比賽獲得獎金新臺幣10萬元','居住者吳小美出售一棟位於香港之房屋，獲利100萬港幣，換算新臺幣約為378萬元','我國B公司為拓展業務，於美國聘僱華僑鄭小春在該地工作，每月給付薪資新臺幣8萬元'],
+    answer:1, explain:'在中華民國境內參加競技競賽所獲獎金為境內來源所得。(所得稅法§8⑩)' },
+
+  { id:'q110_06', law:'所得稅法', chapter:'綜合所得稅', year:110,
+    q:'有關109年度所得稅之課稅規定，下列敘述何者正確？',
+    options:['個人居住者若選擇將股利所得納入綜合所得中課稅，則每人可享有8.5萬元之扣抵稅額上限','個人居住者取得境內公司發放之股利所得，可選擇以就源扣繳方式分離課稅','外國機構投資人之股利所得扣繳率為21%，但若其所屬國家與我國簽有租稅協定者，則扣繳率依協定之規定','境內公司因轉投資境外營利事業而取得之股利收入免稅'],
+    answer:2, explain:'(A)每一申報戶可抵減稅額上限為8萬元（非每戶8.5萬，更非每人）；(B)股利可選擇納入綜合所得課稅或28%分開計稅，但「不得就源扣繳分離課稅」；(C)外國機構投資人之股利所得扣繳率為21%(§88-1)，若有租稅協定者依協定辦理 → 正確；(D)境內公司轉投資境外公司之股利收入應計入境外所得，非免稅。標準答案C。' },
+
+  { id:'q110_07', law:'營業稅法', chapter:'稅額計算', year:110,
+    q:'依加值型及非加值型營業稅法及相關法規規定，下列何者免由海關代徵營業稅？',
+    options:['買家上網訂購衣物並自國外進口完稅價格新臺幣2,500元','自網路下載電子書刷卡付款新臺幣2,000元','我國甲公司上網向外國A公司購買軟體新臺幣15,000元並以磁碟寄送','自國外進口農耕用之機器設備新臺幣200萬元'],
+    answer:1, explain:'跨境電商勞務（下載電子書）由買受人或代理人申報繳稅，非由海關代徵。' },
+
+  { id:'q110_08', law:'稅捐稽徵法', chapter:'強制執行', year:110,
+    q:'依稅捐稽徵法規定，納稅義務人因欠繳稅捐，經財政部函請內政部移民署限制其出境，自限制出境之日起，不得逾幾年？',
+    options:['5年','7年','10年','15年'],
+    answer:0, explain:'限制出境期間自限制之日起不得逾5年，必要時得延長，每次延長不得逾5年。(稅捐稽徵法§24)' },
+
+  { id:'q110_09', law:'營業稅法', chapter:'減免範圍', year:110,
+    q:'依加值型及非加值型營業稅法規定，進口下列何種貨物免徵營業稅？',
+    options:['飼料','金條、金塊、金片','未經加工生鮮農產品','已課菸酒稅之菸酒'],
+    answer:1, explain:'金條、金塊、金片屬免徵營業稅之進口貨物。(營業稅法§9)' },
+
+  { id:'q110_10', law:'所得稅法', chapter:'綜合所得稅', year:110,
+    q:'依所得稅法及相關法規規定，有關納稅義務人109年度綜合所得稅結算申報計算「薪資所得」時，薪資收入減除必要費用之敘述，下列何者正確？',
+    options:['計算薪資所得，可減除自行負擔之上下班交通費，以其從事該職業薪資收入總額之3%為限','計算薪資所得，可減除雇主負擔之職業專用服裝費，以其從事該職業薪資收入總額之3%為限','計算薪資所得，可減除供職務與家庭使用之工具支出，以其從事該職業薪資收入總額之3%為限','計算薪資所得，可減除法令要求所需專業知識之課程訓練費用，以其薪資收入總額之3%為限'],
+    answer:3, explain:'進修訓練費（法令要求所需專業知識課程）得以薪資收入總額3%為限核實扣除。(所得稅法§14①三)' },
+
+  { id:'q110_11', law:'所得稅法', chapter:'營利事業所得稅', year:110,
+    q:'甲公司採曆年制，109年4月10日新購置一臺自用乘人小客車420萬元，預計使用5年，預估無殘值，採平均法計提折舊，其109年度營利事業所得稅申報依所得稅法規定認定之折舊金額為何？',
+    options:['32萬元','37.5萬元','50萬元','52.5萬元'],
+    answer:1, explain:'小客車成本上限250萬元（財政部規定），採平均法5年：250÷5=50萬/年，109年4~12月共9個月：50×9/12=37.5萬元。' },
+
+  { id:'q110_12', law:'所得稅法', chapter:'營利事業所得稅', year:110,
+    q:'所得稅法有關計算未分配盈餘加徵營利事業所得稅之規定，下列何者得自當年度未分配盈餘中減除？',
+    options:['公司自當年度盈餘提列之訴訟損失準備','次一年度營利事業所得稅申報之虧損','公司經股東會決議分派當年度及以前年度盈餘合計數','依其他法律規定，由主管機關命令自當年度盈餘提列之特別盈餘公積'],
+    answer:3, explain:'(D) 依其他法律規定，由主管機關命令自當年度盈餘提列之特別盈餘公積，得自未分配盈餘中減除。(所得稅法§66-9②⑤)。(A)訴訟損失準備非屬法定減除項目；(B)僅次一年度經會計師查核簽證之虧損可減除（非「申報」之虧損）；(C)僅「當年度」盈餘分配可減除，以前年度盈餘分配不可。' },
+
+  { id:'q110_13', law:'所得稅法', chapter:'稽徵程序', year:110,
+    q:'甲公司經稽徵機關核准採用4月制為會計年度，其109年度營利事業所得稅暫繳申報之期間為何？',
+    options:['109年8月1日至8月31日','109年9月1日至9月30日','109年12月1日至12月31日','110年8月1日至8月31日'],
+    answer:2, explain:'4月制會計年度為109/4/1~110/3/31。暫繳申報於會計年度開始後第9個月，即109年12月1日至12月31日。(所得稅法§67)' },
+
+  { id:'q110_14', law:'所得稅法', chapter:'營利事業所得稅', year:110,
+    q:'營利事業申報所得稅時列報之成本費用，下列敘述何者正確？',
+    options:['支付特別股股東之股利支出，得列報費用','捐贈經政府登記有案之體育團體，得全數列報費用','因違反環保法規所科處之罰鍰，得列為營業外損失','應收帳款、應收票據及各項債權得按1%提列備抵呆帳'],
+    answer:1, explain:'(B) 依運動產業發展條例，捐贈經政府登記有案之體育團體得全數列報費用，不受所得額10%限制。(A)股利屬盈餘分配，非費用；(C)罰鍰依所得稅法§38不得列為費用或損失；(D)備抵呆帳上限為1%（應收帳款與票據餘額），非強制1%，得依實際發生比率估列。' },
+
+  { id:'q110_15', law:'營業稅法', chapter:'稽徵', year:110,
+    q:'英國A大學將該大學之一套圖書資料庫透過網際網路提供給我國乙大學使用，每年該大學須支付新臺幣（下同）525萬元給A大學，本項交易行為應如何繳納營業稅？',
+    options:['英國A大學於收取款項當期，向國稅局自動報繳25萬元營業稅','我國乙大學於給付報酬之次期開始15日內，向國稅局報繳26.25萬元','我國乙大學於給付報酬之次期開始15日內，向國稅局報繳25萬元','本案免繳納營業稅'],
+    answer:3, explain:'學術圖書資料庫屬「學術專門著作」性質，依營業稅法§8第6款銷售免徵營業稅。本案外國A大學提供圖書資料庫予乙大學使用，乙大學免代繳營業稅。標準答案D。（Claude 整理，請對照教材確認確切法律依據）' },
+
+  { id:'q110_16', law:'營業稅法', chapter:'稅額計算', year:110,
+    q:'依加值型及非加值型營業稅法規定，甲公司有下列進項憑證，何者不得提出申報扣抵銷項稅額？',
+    options:['依營業稅法第3條第3項第1款規定視為銷售貨物，自行開立載有營業稅額的統一發票','電信公司開立載有甲公司抬頭及營業稅額的電信費統一發票','甲公司購買供一般員工使用的自用乘人小汽車，所取得載有營業稅額的統一發票','乙公司收到甲公司預付訂金，所開立載有營業稅額的統一發票'],
+    answer:2, explain:'§19第5款，自用乘人小汽車(9人座以下)之進項稅額不得扣抵銷項稅額。標準答案C。' },
+
+  { id:'q110_17', law:'營業稅法', chapter:'稽徵', year:110,
+    q:'依加值型及非加值型營業稅法規定，甲公司為我國境內一家開立電子發票之營業人，有關開立電子發票之方式，下列敘述何者正確？',
+    options:['甲公司銷售貨物給非營業人時，應於開立電子發票後7日內，將統一發票資訊傳輸至平台存證','甲公司銷售貨物給營業人時，應於開立電子發票後10日內，將統一發票資訊傳輸至平台存證','甲公司銷售貨物給非營業人，每筆銷售額與銷項稅額合計未滿新臺幣50元時，除買受人要求者外，甲公司得免逐筆開立統一發票，但應於每日營業終了時，按總金額彙開一張統一發票','甲公司開立電子發票，應有存根檔、收執檔及存證檔'],
+    answer:3, explain:'電子發票應有3種檔：存根檔、收執檔、存證檔。標準答案D。(A)(B)(C)各有錯誤之數字或時限規定。' },
+
+  { id:'q110_18', law:'稅捐稽徵法', chapter:'總則', year:110,
+    q:'依稅捐稽徵法及相關法令規定，有關稅捐的受償順序，下列敘述何者正確？',
+    options:['營利事業所得稅優先於使用牌照稅','稅捐之徵收，優先於普通債權','土地增值稅、契稅之徵收優先於一切債權及抵押權','營業稅之徵收優先於一切債權及抵押權'],
+    answer:1, explain:'稅捐優先於普通債權，但不優先於有擔保之抵押權（例外：土地增值稅就土地賣得價款優先受償）。(稅捐稽徵法§6)' },
+
+  { id:'q110_19', law:'稅捐稽徵法', chapter:'稽徵', year:110,
+    q:'甲未依規定辦理108年度綜合所得稅結算申報及繳納，嗣經國稅局查獲甲漏報108年度財產交易所得，本件核課期間於何時屆滿？',
+    options:['114年5月31日','114年6月30日','116年5月31日','116年6月30日'],
+    answer:3, explain:'108年度未申報核課7年。109年綜所稅申報期間因疫情延長至109/6/30，起算日109/7/1，7年屆滿116/6/30。標準答案D。' },
+
+  { id:'q110_20', law:'遺產贈與稅法', chapter:'稽徵程序', year:110,
+    q:'贈與稅繳款書記載繳納期間屆滿日為110年2月17日，納稅義務人如對核定贈與稅處分不服，至遲應於何時提出復查申請？',
+    options:['110年3月19日','110年3月20日','110年3月17日','110年3月16日'],
+    answer:0, explain:'對核定處分不服，應於繳款期間屆滿日之次日起30日內申請復查。110/2/17次日（2/18）起算30日 → 110/3/19。(稅捐稽徵法§35)' },
+
+  { id:'q110_21', law:'遺產贈與稅法', chapter:'總則', year:110,
+    q:'下列何者屬遺產及贈與稅法第15條規定擬制遺產的課稅範圍？',
+    options:['甲死亡前2年內贈與前妻的土地，但前妻已於甲死亡前出售該土地','乙死亡前2年內贈與岳母的上市股票，但該股票於乙死亡前已終止上市','丙死亡前1年內贈與配偶的不動產，但配偶已於丙死亡前出售該不動產','丁死亡前於重病無法處理事務期間轉存長子銀行帳戶的存款'],
+    answer:2, explain:'§15擬制遺產：死亡前2年內贈與配偶之財產視為遺產，配偶事後處分不影響。(A)前妻、(B)岳母均非§15對象；(D)屬§4以贈與論。標準答案C。' },
+
+  { id:'q110_22', law:'稅捐稽徵法', chapter:'行政救濟', year:110,
+    q:'依稅捐稽徵法規定，有關解釋函令的適用原則，下列敘述何者錯誤？',
+    options:['財政部依稅法所發布之解釋函令，對據以申請之案件發生效力','解釋函令的法令見解變更時，如有利於納稅義務人者，對於已核課確定的案件不適用之','稅務違章案件裁罰金額或倍數參考表變更時，如有利於納稅義務人者，適用於尚未核課確定的案件','解釋函令的法令見解變更時，如不利於納稅義務人者，一律自發布日起，發生效力'],
+    answer:3, explain:'(D)錯誤。依稅捐稽徵法§1-1，解釋函令變更不利於納稅義務人者，自發布日「對於發布日前的案件不適用」（即原則上不溯及既往），而非「一律自發布日起發生效力」（會涵蓋以前案件，反而不利）。其餘敘述均正確。' },
+
+  { id:'q110_23', law:'遺產贈與稅法', chapter:'贈與稅之計算', year:110,
+    q:'蔡先生為馬來西亞國民，不具中華民國國籍，110年5月1日以其馬來西亞銀行存款無償為其子償還馬來西亞當地民間借款500萬元；同年6月1日，自馬來西亞銀行匯款300萬元無償為其子購買中華民國境內未上市公司股票，經核算該股票淨值為250萬元。假設蔡先生當年度無其他贈與行為，本件應納贈與稅為何？（本題貨幣單位為新臺幣）',
+    options:['3萬元','8萬元','53萬元','58萬元'],
+    answer:1, explain:'蔡先生為非中華民國國民，僅就境內財產課贈與稅(§3-1)：\n①償還境外借款（馬來西亞）→ 屬境外財產，不課稅\n②匯款300萬為其子購買境內未上市股票 → 屬境內財產贈與\n贈與額：300萬（以購買價認定）\n應納贈與稅 = (300萬 - 110年免稅額220萬) × 10% = 8萬\n標準答案B。' },
+
+  { id:'q110_24', law:'遺產贈與稅法', chapter:'遺產稅之計算', year:110,
+    q:'王先生早年喪偶，3名子女甲、乙、丙事業有成，無奈甲英年早逝，遺有A、B、C、D、E 5名子女，乙為未婚無子女，丙有2名子女，王先生110年3月2日過世，其孫子女均已成年，乙、丙均抛棄繼承，本件遺產稅案的繼承人扣除額為何？',
+    options:['350萬','300萬','250萬','100萬'],
+    answer:2, explain:'甲先死亡→代位繼承(5名孫子女)。乙無子女、丙拋棄繼承，二人應繼分由甲之代位繼承人均分，丙之子女非繼承人。實際繼承人僅5名孫子女，扣除額 5×50=250萬。標準答案C。' },
+
+  { id:'q110_25', law:'遺產贈與稅法', chapter:'稽徵程序', year:110,
+    q:'甲去世後，兒子想把父親留下的上市A公司股票，捐贈給財團法人B文教基金會，於國稅局核發不計入遺產總額證明書多久之內，需將股票交付給基金會，才不會被補徵遺產稅？',
+    options:['2年內','1年內','半年內','3個月內'],
+    answer:3, explain:'依遺贈稅法施行細則§29-1，須於核發不計入遺產總額證明書之日起3個月內交付。標準答案D。' },
+
+  { id:'q111_01', law:"所得稅法", chapter:"稽徵程序", year:111, q:"依所得稅法規定，有關扣繳義務人之定義，下列何者正確？", options:["有限合夥事業分配盈餘予中華民國境內居住之出資者，扣繳義務人為事業負責人", "會計師事務所每月給付員工之薪資，扣繳義務人為該事務所", "個人承租房屋自住，每月給付房東之租金，扣繳義務人為承租之個人", "公司分配股利予總機構在中華民國境外之營利事業股東，扣繳義務人為公司負責人"], answer:3, explain:'' },
+  { id:'q111_02', law:"所得稅法", chapter:"綜合所得稅", year:111, q:"甲為中華民國境內居住之個人，其於110年7月1日死亡，依所得稅法相關規定，下列敘述何者正確？", options:["甲遺有之配偶乙長期居住國外，乙仍應與甲合併辦理110年度綜合所得稅結算申報", "甲之子丙辦理110年度綜合所得稅結算申報時，得將甲列為扶養親屬，惟甲之免稅額應按其該年度死亡前日數占全年日數之比例，換算減除", "甲之子丙依所得稅法第71條之1規定就甲之110年度所得辦理結算申報時，甲適用之基本生活所需之費用，應按該年度死亡前日數，占全年日數之比例換算", "甲之子丙依所得稅法第71條之1規定就甲之110年度所得辦理結算申報時，甲適用之薪資所得特別扣除額，應按該年度死亡前日數，占全年日數之比例換算"], answer:2, explain:'' },
+  { id:'q111_03', law:"所得稅法", chapter:"綜合所得稅", year:111, q:"下列何種情形，依所得稅法規定得免計算租賃所得課徵綜合所得稅？", options:["甲將房屋借與他人使用，除簽約時收取押金，約定期滿免返還外，租賃期間未另外收取租金", "乙自行開設公司，將自有房屋作為辦公室使用，未收取租金", "丙將房屋供朋友居住使用，未收取租金", "丁將房屋供朋友經營小吃店，除由朋友負擔該房屋之房屋稅外，未收取租金"], answer:2, explain:'' },
+  { id:'q111_04', law:"所得稅法", chapter:"所得基本稅額條例", year:111, q:"甲110年度有下列所得，其於辦理該年度綜合所得稅結算申報時，依所得基本稅額條例規定，何者免計入基本所得額？", options:["取得以父親為要保人於96年投保人壽保險之保險給付（非死亡給付）新臺幣100萬元", "出售我國證券投資信託事業私募證券投資信託基金的受益憑證，獲利新臺幣100萬元", "申報綜合所得稅時減除之非現金捐贈新臺幣100萬元", "出售美國公司發行股票，獲利新臺幣80萬元"], answer:3, explain:'' },
+  { id:'q111_05', law:"遺產贈與稅法", chapter:"遺產稅之計算", year:111, q:"A早年喪偶，育有3名子女甲、乙、丙，甲有未滿18足歲的獨生女，乙已婚無子女，丙未婚，嗣A再娶18歲妻，A於111年4月1日過世，甲、乙、丙均抛棄繼承，本件依遺產及贈與稅法規定，配偶扣除額及繼承人扣除額共多少？", options:["543萬元", "643萬元", "693萬元", "793萬元"], answer:1, explain:'' },
+  { id:'q111_06', law:"所得稅法", chapter:"營利事業所得稅", year:111, q:"依所得稅法規定，下列情形何者在申報營利事業所得稅時應認列為損益項目？", options:["尚未出售之外幣，因匯率調整而發生之帳面盈益", "尚未出售之長期投資股票，因市價下跌而產生之帳面損失", "因員工退休而給付一筆退休金，該筆退休金完全從過去年度所提撥之退休金準備中支付", "銷貨收入中屬於附贈獎勵積點的部分，客戶尚未兌換該積點"], answer:3, explain:'' },
+  { id:'q111_07', law:"所得稅法", chapter:"綜合所得稅", year:111, q:"未婚之甲110年度之所得為股利100萬元及薪資所得120萬元，其申報扶養之父母各有股利6萬元及4萬元，該申報戶邊際稅率為20%，有關甲110年度綜合所得稅結算申報，下列敘述何者正確？", options:["該申報戶之股利，父母可各自選擇合併計稅減除股利可抵減稅額或單一稅率分開計稅", "該申報戶之股利全數適用單一稅率分開計稅，較為有利", "該申報戶之股利全數適用合併計稅減除股利可抵減稅額，較為有利", "該申報戶之全部股利，可抵減之稅額為股利合計數之8.5%"], answer:2, explain:'' },
+  { id:'q111_08', law:"所得稅法", chapter:"營利事業所得稅", year:111, q:"外國A公司在中華民國境內設有分公司，A公司轉投資國內上市公司而獲配之股利所得，該筆股利所得課稅方式為何？", options:["依規定扣繳稅款，不計入營利事業所得額", "由A公司境內分公司計入免稅所得", "由A公司境內分公司計入營利事業所得額申報納稅", "該股利非屬中華民國來源所得，無須課稅"], answer:0, explain:'' },
+  { id:'q111_09', law:"所得稅法", chapter:"所得基本稅額條例", year:111, q:"乙公司110年度全年度所得額為500萬元，其中包括停徵所得稅之有價證券交易所得額250萬元，及出售土地免稅所得50萬元，其依所得基本稅額條例計算之基本稅額為何？", options:["54萬元", "48萬元", "30萬元", "24萬元"], answer:1, explain:'' },
+  { id:'q111_10', law:"所得稅法", chapter:"獎懲", year:111, q:"公司未依規定期限辦理營利事業所得稅結算申報，依所得稅法相關規定，下列敘述何者正確？", options:["公司接到稽徵機關填發之滯報通知書之日起15日內補辦結算申報，按核定應納稅額另徵20%怠報金", "公司接到稽徵機關填發之滯報通知書之日起15日內補辦結算申報，按核定應納稅額另徵10%滯報金", "公司接到稽徵機關填發之滯報通知書後仍未補辦申報，按同業利潤標準核定所得額，補稅並加徵滯納金", "公司接到稽徵機關填發之滯報通知書後補辦結算申報，按補繳稅額加計利息，免予處罰"], answer:1, explain:'' },
+  { id:'q111_11', law:"營業稅法", chapter:"總則", year:111, q:"依加值型及非加值型營業稅法規定，有關營業稅之課徵，下列敘述何者錯誤？", options:["營業人因進貨退出或折讓而收回之營業稅額，得於發生進貨退出或折讓之次期進項稅額中扣減之", "加值型及非加值型營業稅法第14條所定之銷售額，為營業人銷售貨物或勞務所收取之全部代價，包括營業人在貨物或勞務之價額外收取之一切費用。但本次銷售之營業稅額不在其內", "營業人自用乘人小汽車之進項稅額，不得扣抵銷項稅額", "典當業得依查定之銷售額計算之"], answer:0, explain:'' },
+  { id:'q111_12', law:"營業稅法", chapter:"減免範圍", year:111, q:"依加值型及非加值型營業稅法規定，營業人銷售下列何種貨物或勞務，不適用免徵營業稅？", options:["報社銷售之廣告及電視臺之廣告播映", "土地", "碾米加工", "依第四章第二節規定計算稅額之營業人，銷售其非經常買進、賣出而持有之固定資產"], answer:0, explain:'' },
+  { id:'q111_13', law:"營業稅法", chapter:"稅額計算", year:111, q:"依加值型及非加值型營業稅法及相關規定，營業人是某觀光飯店，下列那一項進項稅額，不得扣抵銷項稅額？", options:["購買載運貨物用小貨車", "購置總經理專用五人座座車", "購買載運員工上、下班用大型客車", "購置至機場接送旅客之客貨兩用車"], answer:1, explain:'' },
+  { id:'q111_14', law:"營業稅法", chapter:"稽徵", year:111, q:"依加值型及非加值型營業稅法及相關規定，有關統一發票之敘述，下列何者正確？", options:["全部營業人皆可使用收銀機統一發票", "使用收銀機開立統一發票之營業人，亦適用「每日彙開發票」之規定", "使用發票之營業人，於開立發票時，應依時序開立", "營業人支付各項費用而取具載有買受人營利事業統一編號之進項發票，亦可參加統一發票兌奬"], answer:2, explain:'' },
+  { id:'q111_15', law:"營業稅法", chapter:"稅額計算", year:111, q:"依加值型及非加值型營業稅法規定，甲公司是一間銷售應稅貨物的零售商，假設本期甲公司總共僅開立3張二聯式統一發票，金額分別為1,200元、5,000元及3,600元，甲公司本期依法應申報之銷售額為多少？", options:["490元", "9,333元", "9,800元", "10,290元"], answer:1, explain:'' },
+  { id:'q111_16', law:"營業稅法", chapter:"稅率", year:111, q:"依加值型及非加值型營業稅法及相關法規規定，為因應經濟特殊情況，調節物資供應，行政院得對進口下列何種貨物機動調整應徵之營業稅？", options:["蕎麥", "飼料", "麵粉", "玉米"], answer:3, explain:'' },
+  { id:'q111_17', law:"土地稅法", chapter:"土地增值稅", year:111, q:"A公司於110年7月1日出售1筆自營工廠用地，申報移轉現值總價為6,000萬元，繳納土地增值稅800萬元，於110年12月1日重購另一筆自營工廠用地，申報移轉現值總價為5,600萬元，依土地稅法第35條規定，A公司可以申請退還若干土地增值稅？", options:["0元", "400萬元", "600萬元", "800萬元"], answer:1, explain:'' },
+  { id:'q111_18', law:"稅捐稽徵法", chapter:"稽徵", year:111, q:"甲107年綜合所得稅結算申報，經國稅局查獲漏報其他所得，向其補徵稅額新臺幣50萬元，繳款書繳納期間為109年9月1日至109年9月10日。嗣甲因受風災影響，依稅捐稽徵法第26條規定，於109年9月2日向國稅局申請延期繳納，經國稅局核准延期繳納，變更繳納期間為109年9月11日至109年12月10日，該筆稅款之徵收期間於何時屆滿？（題目及選項之期日或期間末日均非例假日）", options:["114年9月9日", "114年9月10日", "114年12月9日", "114年12月10日"], answer:3, explain:'' },
+  { id:'q111_19', law:"稅捐稽徵法", chapter:"強制執行", year:111, q:"甲公司因漏開統一發票致短漏報銷售額，經國稅局補徵營業稅新臺幣（下同）100萬元，該筆稅款繳納期間為111年3月1日至111年3月10日，甲公司未提起行政救濟且於繳納期間屆滿30日後仍未繳納，該筆稅款應加徵之滯納金為何？", options:["15萬元", "10萬元", "7萬5千元", "5萬元"], answer:1, explain:'' },
+  { id:'q111_20', law:"稅捐稽徵法", chapter:"稽徵", year:111, q:"依稅捐稽徵法規定，甲於111年5月15日繳納111年房屋稅，嗣發現稅捐稽徵機關適用稅率錯誤，致溢繳稅款，其得自繳納之日起幾年內提出具體證明，申請退還？", options:["5年", "10年", "15年", "無期限"], answer:2, explain:'' },
+  { id:'q111_21', law:"稅捐稽徵法", chapter:"強制執行", year:111, q:"依稅捐稽徵法規定，甲於109年度綜合所得稅結算申報，因短漏報所得經國稅局補徵稅額，核定稅額通知書及補繳稅款繳款書業合法送達，該筆稅額繳納期間為111年1月11日至111年1月20日，甲於繳納期間屆滿30日後仍未繳納。對於該筆應納稅額應否移送強制執行之敘述，下列何者正確？", options:["甲已依法申請復查中，國稅局仍應移送強制執行", "甲依法申請復查後，對復查決定不服依法提起訴願，並就復查決定之應納稅額依限繳納三分之一，國稅局應暫緩移送強制執行", "甲依法申請復查後，對復查決定不服依法提起訴願，但對復查決定之應納稅額並未繳納，亦未提供相當擔保，經國稅局就甲相當於復查決定應納稅額三分之一之財產，通知有關機關，不得為移轉或設定他項權利者，應暫緩移送強制執行", "甲依法申請復查後，對復查決定不服依法提起訴願，並就復查決定之應納稅額依限繳納三分之一，但對復查決定提起訴願時，已逾訴願之提起期間，國稅局仍應暫緩移送強制執行"], answer:1, explain:'' },
+  { id:'q111_22', law:"稅捐稽徵法", chapter:"稽徵", year:111, q:"甲因受風災影響，不能於法定期間內繳清稅捐新臺幣（下同）2,000萬元，爰依稅捐稽徵法第26條規定，向稅捐稽徵機關申請分期繳納，經稅捐稽徵機關核准分10期繳納，每期繳納200萬元。甲繳納2期後，再因受地震影響，就未清繳之餘額稅款依上述規定向稅捐稽徵機關申請分期繳納，稅捐稽徵機關可核准分期繳納期數最長為何？", options:["0期", "10期", "34期", "36期"], answer:2, explain:'' },
+  { id:'q111_23', law:"稅捐稽徵法", chapter:"行政救濟", year:111, q:"依稅捐稽徵法規定，對於納稅義務人申請復查之敘述，下列何者正確？", options:["納稅義務人對核定稅捐之處分申請復查時，應先繳納應納稅額或應補稅額之二分之一，稅捐稽徵機關始得受理其復查", "依核定稅額通知書所載有應納稅額或應補徵稅額者，納稅義務人申請復查之期限係自收到繳款書之翌日起算30日內", "納稅義務人復查之申請，係交由郵務機構寄發復查申請書者，以郵寄地郵戳日期為準", "納稅義務人不服稅捐稽徵機關就其財產通知有關機關，不得為移轉或設定他項權利之處分，應向該稅捐稽徵機關申請復查"], answer:2, explain:'' },
+  { id:'q111_24', law:"遺產贈與稅法", chapter:"遺產稅之計算", year:111, q:"甲自幼隨父母至葡萄牙定居，入籍葡萄牙，放棄中華民國國籍，嗣甲大學畢業，隻身返臺成家立業，111年1月1日挑戰元旦全馬路跑，不幸心肌炎發作致死，甲遺有宜蘭的豪宅1幢，死亡時公告現值5,600萬元，由妻子及3歲5個月的稚子共同繼承，本件依遺產及贈與稅法規定，應納遺產稅額為何？", options:["414.4萬元", "275.1萬元", "427.7萬元", "288.4萬元"], answer:0, explain:'' },
+  { id:'q111_25', law:"遺產贈與稅法", chapter:"總則", year:111, q:"下列何者屬贈與行為，應依遺產及贈與稅法規定課徵贈與稅？", options:["某上市公司的小股東放棄現金增資新股認購權", "獨資商號資本主出資彌補該商號虧損", "父母於子女婚嫁時贈與50萬元現金", "未成年子女購置之不動產，但未能舉證資金來源"], answer:3, explain:'' },
+  { id:'q112_01', law:"所得稅法", chapter:"綜合所得稅", year:112, q:"依所得稅法規定，納稅義務人111年度綜合所得稅結算申報時，符合下列那一種情形，不得列報長期照顧特別扣除額或幼兒學前特別扣除額？", options:["採各類所得分開計算稅額方式，經減除該2項扣除額後，本人與其配偶適用稅率分別為20%、12%", "基本所得額650萬元", "符合衛生福利部公告須長期照顧之身心失能者領有身心障礙證明", "納稅義務人列報之子女於106年1月1日出生"], answer:0, explain:'' },
+  { id:'q112_02', law:"所得稅法", chapter:"所得基本稅額條例", year:112, q:"個人111年度符合下列何種情形，免依所得基本稅額條例規定計算繳納所得稅？", options:["經常居住中華民國境內之個人，有香港來源所得新臺幣200萬元", "經常居住中華民國境內之個人，有基本所得額新臺幣800萬元", "111年度綜合所得稅結算申報有投資抵減稅額新臺幣1萬元", "外國人111年8月至12月受外國公司派遣來我國工作，取得國外薪資新臺幣800萬元"], answer:3, explain:'' },
+  { id:'q112_03', law:"所得稅法", chapter:"營利事業所得稅", year:112, q:"依所得稅法及相關法規規定，營利事業應保持足以正確計算其營利事業所得額之帳簿憑證，下列何者正確？", options:["營利事業設置之帳簿，除未結會計事項外，應至少保存5年", "稽徵機關進行調查時，營利事業未提示各種證明所得額之帳簿、文據，稽徵機關僅得依同業利潤標準核定其所得額", "營利事業遭受不可抗力災害以致帳簿憑證滅失者，應依規定併同災害損失報請稽徵機關派員勘查屬實或提出確實證據證明屬實", "營利事業之帳簿憑證因遭受不可抗力而滅失者，稽徵機關應依同業利潤標準核定其所得額"], answer:2, explain:'' },
+  { id:'q112_04', law:"所得稅法", chapter:"營利事業所得稅", year:112, q:"依所得稅法及相關法規規定，甲公司108年度新設立，108年度依商業會計法處理之本期稅後淨利為800萬元，109年4月召開股東會決議分派股利300萬元，另109年12月購買生產用機器200萬元，其申報108年度未分配盈餘加徵之營利事業所得稅金額，下列何者正確？", options:["40萬元", "25萬元", "15萬元", "11萬元"], answer:3, explain:'' },
+  { id:'q112_05', law:"所得稅法", chapter:"所得基本稅額條例", year:112, q:"營利事業計算基本所得額時，以所得稅法規定計算之課稅所得額為基礎，加計之各項所得，下列何者非屬加計項目？", options:["依所得稅法規定停徵所得稅之證券交易所得", "依產業創新條例規定智慧財產權研究發展支出加倍減除金額", "依所得稅法規定不計入所得額課稅之股利或盈餘收入", "依國際金融業務條例規定免徵營利事業所得稅之所得額"], answer:2, explain:'' },
+  { id:'q112_06', law:"所得稅法", chapter:"營利事業所得稅", year:112, q:"總機構在中華民國境外之A公司，其在臺分公司於107年6月買進一筆土地，與境內甲建設公司合建，於110年9月興建完成並各自出售土地、房屋，A公司110年度營利事業所得稅申報房地合一課徵所得稅適用稅率為何？", options:["45%", "35%", "20%", "15%"], answer:1, explain:'' },
+  { id:'q112_07', law:"所得稅法", chapter:"獎懲", year:112, q:"依所得稅法第110條規定，乙公司110年營利事業所得稅結算申報為營業虧損200萬元，稽徵機關查獲短漏報所得60萬元，加計短漏所得額後核定其營利事業所得額仍為虧損，不考量減免處罰情形下，其應處罰鍰金額？", options:["24萬元", "12萬元", "9萬元", "6萬元"], answer:2, explain:'' },
+  { id:'q112_08', law:"所得稅法", chapter:"營利事業所得稅", year:112, q:"依所得稅法及相關法規規定，下列何者不符合房地合一課徵所得稅新制有關自住房地租稅優惠之條件？", options:["個人與其配偶及未成年子女於該房屋辦竣戶籍登記連續滿8年", "個人或其配偶於該房屋連續居住滿7年", "個人與其配偶及成年子女於交易前6年內未曾適用自住房地優惠", "房屋在交易前7年內，未曾出租、供營業或執行業務使用"], answer:2, explain:'' },
+  { id:'q112_09', law:"所得稅法", chapter:"稽徵程序", year:112, q:"非屬小規模營利事業之獨資合夥組織，依所得稅法相關規定之申報營利事業所得稅方式，下列敘述何者錯誤？", options:["應辦理結算申報", "免辦理暫繳申報", "應辦理未分配盈餘申報", "應辦理清算申報"], answer:2, explain:'' },
+  { id:'q112_10', law:"所得稅法", chapter:"獎懲", year:112, q:"依所得稅法及相關法規規定，有關營利事業所得稅申報之罰則，下列敘述何者錯誤？", options:["納稅義務人已依本法規定辦理結算、決算或清算申報，而對依本法規定應申報課稅之所得額有漏報或短報情事者，處以所漏稅額二倍以下之罰鍰", "納稅義務人未依本法規定自行辦理結算、決算或清算申報，而經稽徵機關調查，發現有依本法規定課稅之所得額者，除依法核定補徵應納稅額外，應照補徵稅額，處三倍以下之罰鍰", "納稅義務人為獨資、合夥組織之營利事業者，應就稽徵機關核定短漏之課稅所得額，按所漏稅額之半數計算罰鍰", "營利事業已依所得稅法第102條之2規定辦理申報，但有漏報或短報未分配盈餘者，處以所漏稅額一倍以下之罰鍰"], answer:2, explain:'' },
+  { id:'q112_11', law:"營業稅法", chapter:"稅率", year:112, q:"依加值型及非加值型營業稅法規定，保險業下列何種收入適用稅率百分之一？", options:["出租房屋收入", "出售固定資產收入", "保險費收入", "再保費收入"], answer:3, explain:'' },
+  { id:'q112_12', law:"營業稅法", chapter:"稅率", year:112, q:"依加值型及非加值型營業稅法及相關法規規定，對有二人鋼琴演奏及演唱的鋼琴酒吧（PUB）課徵營業稅時，適用下列那一種稅率？", options:["5%", "10%", "15%", "25%"], answer:2, explain:'' },
+  { id:'q112_13', law:"營業稅法", chapter:"稽徵", year:112, q:"依加值型及非加值型營業稅法及相關規定，營業人如有固定營業場所，應於何時向主管稽徵機關申請稅籍登記？", options:["試銷期滿後", "開始營業前", "開始營業後10日內", "無時間限制"], answer:1, explain:'' },
+  { id:'q112_14', law:"營業稅法", chapter:"稽徵", year:112, q:"依加值型及非加值型營業稅法及相關規定，經銷家電產品的公司依經銷契約自家電製造商取得的獎勵金，經銷商應如何書立憑證？", options:["應開立統一發票", "應開立銷貨退回或折讓證明單", "應開立進貨退出或折讓證明單", "應開立銀錢收據"], answer:2, explain:'' },
+  { id:'q112_15', law:"營業稅法", chapter:"稽徵", year:112, q:"依加值型及非加值型營業稅法及相關規定，外國之事業、機關、團體、組織在我國境內無固定營業場所，銷售電子勞務予境內自然人，年銷售額超過新臺幣多少元，即應依法向主管稽徵機關申請稅籍登記？", options:["48萬元", "36萬元", "24萬元", "12萬元"], answer:0, explain:'' },
+  { id:'q112_16', law:"營業稅法", chapter:"減免範圍", year:112, q:"依加值型及非加值型營業稅法及相關法規規定，銷售下列農產品，何者不得免徵營業稅？", options:["水果", "香腸", "糙米", "原木"], answer:1, explain:'' },
+  { id:'q112_17', law:"土地稅法", chapter:"地價稅", year:112, q:"依土地稅法規定，每年11月開徵之地價稅，係以當年何日土地登記簿上所記載之土地所有權人為納稅義務人？", options:["1月1日", "8月31日", "9月22日", "12月31日"], answer:1, explain:'' },
+  { id:'q112_18', law:"土地稅法", chapter:"地價稅", year:112, q:"依土地稅法規定，有關一般土地適用的地價稅稅率之敘述，下列何者錯誤？", options:["未超過累進起點地價5倍者，課徵10‰", "超過累進起點地價5倍至10倍者，就其超過部分課徵25‰", "超過累進起點地價15倍至20倍者，就其超過部分課徵45‰", "超過累進起點地價20倍以上者，就其超過部分課徵55‰"], answer:0, explain:'' },
+  { id:'q112_19', law:"土地稅法", chapter:"土地增值稅", year:112, q:"依土地稅法規定，移轉下列何項土地時，可以申請不課徵土地增值稅？", options:["因繼承而移轉之土地", "因被徵收而移轉之土地", "移轉與自然人之作農業使用的農業用地", "移轉與營利事業之作工廠使用的工業用地"], answer:2, explain:'' },
+  { id:'q112_20', law:"土地稅法", chapter:"地價稅", year:112, q:"依土地稅法規定，A公司持有一筆都市計畫公共設施保留地，供其員工做停車使用，該土地課稅總地價為1,000萬元，當年應繳納地價稅額為若干？", options:["10萬元", "6萬元", "2萬元", "0元"], answer:1, explain:'' },
+  { id:'q112_21', law:"稅捐稽徵法", chapter:"罰則", year:112, q:"甲營利事業自110年9月1日起至110年10月31日依法規定應給與他人憑證而未給與，以及應自他人取得憑證而未取得，經國稅局於111年1月20日查獲，國稅局於依稅捐稽徵法第44條規定論處違章時，下列敘述何者為正確？", options:["國稅局應就查獲當次查明認定之總額，就甲營利事業未依法規定給與他人憑證及取得憑證之金額，分別依該條第1項規定之罰鍰額度計算罰鍰金額後，分別適用該條第2項關於處罰金額最高不得超過新臺幣（下同）100萬元之規定", "國稅局不須區分甲營利事業未依法規定給與他人憑證及取得憑證之金額，直接就查獲當次查明認定之總額，依該條第1項規定之罰鍰額度計算罰鍰金額，並適用該條第2項關於處罰金額最高不得超過100萬元之規定", "國稅局於計算罰鍰金額時，須就經查明認定之總額，裁處百分之五罰鍰，但最高不得超過100萬元", "國稅局於計算罰鍰金額時，可就經查明認定之總額，裁處百分之五以下罰鍰，但最高可超過100萬元"], answer:0, explain:'' },
+  { id:'q112_22', law:"稅捐稽徵法", chapter:"稽徵", year:112, q:"依稅捐稽徵法規定，下列何種情形，稅捐稽徵人員對於納稅義務人之財產、所得、營業、納稅等資料應絕對保守秘密？", options:["債權人持拍賣抵押物裁定，向稅捐稽徵機關申請查調該抵押人之所得資料", "債權人持金錢給付之確定判決，向稅捐稽徵機關申請查調判決所載債務人之財產資料", "法務部行政執行署所屬行政執行分署因辦理公法上金錢給付義務執行事件之需要，經財政部核定後函請稅捐稽徵機關提供納稅義務人之財產、所得、營業及納稅資料", "納稅義務人死亡，其繼承人向稅捐稽徵機關申請查調該納稅義務人之財產及所得資料"], answer:0, explain:'' },
+  { id:'q112_23', law:"稅捐稽徵法", chapter:"強制執行", year:112, q:"下列何者非屬稅捐稽徵法第24條規定之租稅保全措施？", options:["辦理禁止處分登記", "向法院聲請裁定拘提管收", "向法院聲請裁定假扣押", "限制出境"], answer:1, explain:'' },
+  { id:'q112_24', law:"稅捐稽徵法", chapter:"強制執行", year:112, q:"依稅捐稽徵法及相關法令規定，關於限制出境，下列敘述何者正確？", options:["營利事業欠繳營業稅150萬元，或個人欠稅100萬元，惟有脫產之虞，應予限制出境", "對於限制出境處分不服，應向財政部訴願會提起訴願", "個人應先執行禁止財產移轉或設定他項權利，或申請實施財產假扣押，始得函請內政部限制出境", "個人或營利事業負責人限制出境期間最長不得超過7年"], answer:2, explain:'' },
+  { id:'q112_25', law:"所得稅法", chapter:"綜合所得稅", year:112, q:"甲無配偶，育有2名就讀空中大學的子女，甲於112年5月辦理111年度綜合所得稅申報時，列報項目包括免稅額計27.6萬元、標準扣除額12.4萬元、特別扣除額-薪資所得20.7萬元、教育學費5萬元、財產交易損失5萬元，111年度每人基本生活所需費用為19.6萬元，甲得自綜合所得總額中減除之基本生活費差額為何？", options:["0元", "8.8萬元", "18.8萬元", "23.8萬元"], answer:2, explain:'' },
+  { id:'q113_01', law:"所得稅法", chapter:"國際租稅", year:113, q:"中華民國境內居住之個人甲透過國外跨境電商於網路架設的訂房交易平台，訂購澎湖飯店一間4人房，並於入住後刷卡給付全額住房費16,000元予該飯店，又澎湖飯店須就上開住房費5%計算平台服務的手續費，支付予該國外跨境電商作為其提供電子勞務的報酬。上開交易有關的所得課稅規定，下列敘述何者錯誤？", options:["該國外跨境電商因係在國外提供電子勞務，故其自我國飯店業者所收取之手續費，非屬中華民國來源所得", "飯店業者應就全額住房費16,000元申報營業收入，並得列報該平台服務手續費", "飯店業者於給付平台服務手續費予該國外跨境電商時，應依規定扣繳所得稅", "居住者甲無須對任何業者扣繳並申報納稅"], answer:0, explain:'' },
+  { id:'q113_02', law:"所得稅法", chapter:"綜合所得稅", year:113, q:"納稅義務人甲112年度有下列股利或盈餘，並依所得稅法規定，選擇就其申報戶股利或盈餘合計金額按28%之稅率分開計算應納稅額，由其合併報繳，何者不得適用該課稅規定？", options:["獲配國內公司分配111年度之股利", "獲配合作社分配111年度之盈餘", "獲配獨資合夥事業分配111年度之盈餘", "獲配有限合夥事業分配111年度之盈餘"], answer:2, explain:'' },
+  { id:'q113_03', law:"所得稅法", chapter:"所得基本稅額條例", year:113, q:"營利事業計算基本所得額時，以所得稅法規定計算之課稅所得額，所加計之各款所得項目，下列敘述何者正確？", options:["依所得稅法規定免稅之土地交易所得", "依產業創新條例規定適用投資抵減之研究發展支出", "依所得稅法規定不計入課稅所得額之股利或盈餘收入", "依國際金融業務條例規定免徵營利事業所得稅之所得額"], answer:3, explain:'' },
+  { id:'q113_04', law:"所得稅法", chapter:"綜合所得稅", year:113, q:"依所得稅法及相關法規規定，有關綜合所得稅列舉扣除額，下列敘述何者錯誤？", options:["得減除之醫藥及生育費列舉扣除額之適用對象，限納稅義務人、配偶或受扶養親屬", "減除之災害損失列舉扣除額之適用對象，限納稅義務人、配偶或受扶養直系親屬", "得減除之保險費列舉扣除額之適用對象，限納稅義務人、配偶或受扶養直系親屬", "得減除之捐贈列舉扣除額之適用對象，限納稅義務人、配偶及受扶養親屬"], answer:1, explain:'' },
+  { id:'q113_05', law:"所得稅法", chapter:"國際租稅", year:113, q:"總機構在中華民國境內之甲公司，112年度在境內之所得額為新臺幣（下同）1,000萬元，同年度在美國之分公司所得額為800萬元、已納美國所得稅180萬元；另在日本之分公司為虧損300萬元，甲公司112年度營利事業所得稅申報，得自結算應納稅額中扣抵之國外所得稅金額為多少？", options:["200萬元", "180萬元", "160萬元", "100萬元"], answer:3, explain:'' },
+  { id:'q113_06', law:"所得稅法", chapter:"營利事業所得稅", year:113, q:"甲110年10月1日出售下列4筆房屋、土地（房屋使用權），依所得稅法規定，那一筆交易所得不適用房地合一所得稅制？", options:["出售之A房地，甲係於104年12月1日與建商簽約購買成屋，於105年2月1日完成所有權移轉登記", "出售之B房地，甲係於108年10月1日與建商簽約購買預售屋，於110年8月1日完成所有權移轉登記", "出售之C土地，甲係以104年9月1日購入之土地與建商合建分售，建商於106年8月興建完成，並辦妥房屋所有權登記", "出售之D房屋使用權，甲係於104年10月1日與建商簽約購買設定地上權方式之房屋使用權，於105年2月1日取得房屋使用權"], answer:2, explain:'' },
+  { id:'q113_07', law:"所得稅法", chapter:"國際租稅", year:113, q:"依所得稅法第43條之4規定，依外國法律設立，實際管理處所在中華民國境內之營利事業，應視為總機構在中華民國境內之營利事業，其條件不包含下列何者？", options:["在境內實際執行主要經營活動", "實際資金來源地為境內", "財務報表之製作或儲存處所在境內", "作成重大經營管理決策者為境內居住者"], answer:1, explain:'' },
+  { id:'q113_08', law:"所得稅法", chapter:"所得基本稅額條例", year:113, q:"甲辦理112年度綜合所得稅結算申報時，下列何者應計入個人基本所得額計算課徵基本稅額？", options:["112年甲取得以其母為要保人之人壽保險之死亡給付（97年投保）3,000萬元", "112年甲出售國內上市公司股票，獲利700萬元", "112年甲之全部海外所得為出售一筆位於英國之房地，售價新臺幣2,500萬元，成本及必要費用新臺幣2,450萬元", "甲112年取自國內A公司分配之現金股利100萬元，並採28%稅率分開計稅"], answer:3, explain:'' },
+  { id:'q113_09', law:"所得稅法", chapter:"稽徵程序", year:113, q:"依所得稅法及其相關法規規定，扣繳義務人對中華民國境內居住之個人未適用分離課稅及免稅規定之利息所得（未提示儲蓄免扣證），每次給付金額超過多少元須要扣繳稅款？", options:["1,000元", "2,000元", "10,000元", "20,000元"], answer:3, explain:'' },
+  { id:'q113_10', law:"所得稅法", chapter:"獎懲", year:113, q:"丁公司已依規定辦理營利事業所得稅結算申報，稽徵機關查核其列報減除捐贈支出超過所得稅法規定之限額，致有短繳稅款之情形，稽徵機關依所得稅法規定處理方式，下列敘述何者正確？", options:["核定補稅並加計利息", "核定補稅並加徵滯納金", "核定補稅並就漏稅額處罰", "核定補稅並加徵滯報金"], answer:0, explain:'' },
+  { id:'q113_11', law:"營業稅法", chapter:"稽徵", year:113, q:"依加值型及非加值型營業稅法規定，有關進口貨物，下列敘述何者錯誤？", options:["自國外進入保稅區之保稅貨物，皆免按進口課徵營業稅", "關稅應列入進口貨物之營業稅銷售額", "同批進口貨物完稅價格合計在財政部規定金額以下者，免課徵進口營業稅", "自國外進口外國古物，免課徵營業稅"], answer:3, explain:'' },
+  { id:'q113_12', law:"營業稅法", chapter:"稅額計算", year:113, q:"依加值型及非加值型營業稅法及相關法規規定，下列敘述何者正確？", options:["銀行業經營非專屬本業之銷售額部分，得申請按銷項稅額扣減進項稅額方式計算營業稅額", "進項稅額憑證申報扣抵期間，以5年為限", "分期付款銷售貨物並約定按期應收取價款者，買方若未依約付款，得免按期開立統一發票申報銷售額與營業稅額", "放棄適用免徵營業稅規定之營業人，5年內不得變更恢復適用免稅規定"], answer:0, explain:'' },
+  { id:'q113_13', law:"營業稅法", chapter:"減免範圍", year:113, q:"依加值型及非加值型營業稅法及相關法規規定，下列何者不適用免徵營業稅之規定？", options:["療養院收取之病房住宿費", "依護理機構分類設置標準設置之產後護理機構收取之住房費", "學校依法辦理國小兒童課後照顧服務機構收取之課後輔導費", "私立學校提供該校在學學生屬教育勞務之遊學服務收入"], answer:1, explain:'' },
+  { id:'q113_14', law:"營業稅法", chapter:"罰則", year:113, q:"依加值型及非加值型營業稅法規定，營業人有下列何種情形，稽徵機關得停止其營業？", options:["未依規定申請稅籍登記者", "未依規定申請變更、註銷登記或申報暫停營業、復業者", "開立統一發票，應行記載事項未依規定記載或所載不實者", "營業人漏開統一發票或於統一發票上短開銷售額，於法定申報期限前經查獲，且1年內經查獲達3次者"], answer:3, explain:'' },
+  { id:'q113_15', law:"營業稅法", chapter:"稽徵", year:113, q:"依加值型及非加值型營業稅法規定，營業人如未繳清稅款（營業稅）或未提供擔保，下列何種情形，仍得變更稅籍登記？", options:["變更負責人", "變更營業人名稱", "變更地址", "減少資本"], answer:2, explain:'' },
+  { id:'q113_16', law:"土地稅法", chapter:"土地增值稅", year:113, q:"依土地稅法規定，土地所有權人出售其自用住宅用地，原申請按一般用地稅率課徵土地增值稅，但得於下列何項日期前，向稽徵機關補行申請改按自用住宅用地稅率核課土地增值稅？", options:["繳納期間屆滿前", "收到稽徵機關核定一般用地稅率通知之次日起30日內", "訂定契約日之日起60日內", "申報土地移轉現值之次日起60日內"], answer:0, explain:'' },
+  { id:'q113_17', law:"土地稅法", chapter:"地價稅", year:113, q:"甲有土地一筆，辦理信託，受託人為乙，受益人為丙。信託契約期間內，乙基於甲之意旨為管理目的，向丁銀行辦理抵押借款；依土地稅法及相關法規規定，在信託關係存續期間，該筆土地地價稅納稅義務人為何？", options:["甲", "乙", "丙", "丁銀行"], answer:1, explain:'' },
+  { id:'q113_18', law:"稅捐稽徵法", chapter:"強制執行", year:113, q:"依稅捐稽徵法及相關法規規定，有關稅款擔保品的種類及計值方式，下列敘述何者正確？", options:["黃金按9折計算", "上市或上櫃股票以收盤價計值，再按9折計算", "公司債券以成交價計值，再按8折計算", "道路用地以列入徵收補償計畫者為限，以土地公告現值加4成估算"], answer:0, explain:'' },
+  { id:'q113_19', law:"稅捐稽徵法", chapter:"強制執行", year:113, q:"依稅捐稽徵法及相關法規規定，有關限制出境處分，下列敘述何者正確？", options:["在中華民國境內居住之個人或在中華民國境內之營利事業，對欠繳之應納稅捐（不含罰鍰）已達限制出境金額標準且依法申請復查，在復查程序終結前，該個人或營利事業隱匿或處分財產，有規避稅捐執行之虞者，稅捐稽徵機關不得報財政部函請內政部移民署限制該個人或營利事業負責人出境", "欠稅人或欠稅營利事業負責人對限制出境處分不服，應向報財政部函請內政部移民署限制出境之稅捐稽徵機關申請復查", "限制出境之期間，自內政部移民署限制出境之日起，可逾5年", "經限制出境之欠稅人或欠稅營利事業負責人，依規定向稅捐稽徵機關提供相當擔保後，解除出境限制"], answer:3, explain:'' },
+  { id:'q113_20', law:"稅捐稽徵法", chapter:"稽徵", year:113, q:"依稅捐稽徵法及相關法規規定，關於徵收期間，下列敘述何者正確？", options:["徵收期間應予扣除公司清算申報債權期間", "徵收期間應予扣除暫緩執行之期間", "徵收期間應予扣除逾期申請復查期間", "徵收期間應予扣除查對更正期間"], answer:1, explain:'' },
+  { id:'q113_21', law:"稅捐稽徵法", chapter:"罰則", year:113, q:"甲公司112年度營利事業所得結算申報案件，嗣經國稅局查得該公司出售資產交易涉有租稅規避情事，核定應補繳營利事業所得稅100萬元，並加徵租稅規避滯納金15萬元，稅單繳納期間末日適逢星期六（次週一為上班日），納稅義務人於次週五始至銀行繳納。依稅捐稽徵法第20條規定，應加徵多少滯納金？", options:["1萬元", "1.15萬元", "2萬元", "2.3萬元"], answer:0, explain:'' },
+  { id:'q113_22', law:"稅捐稽徵法", chapter:"納稅者權利保護法", year:113, q:"稅捐核課或處罰應恪遵正當法律程序，依納稅者權利保護法及相關法規規定，下列敘述何者錯誤？", options:["國稅局所為課稅或處罰，應以書面敘明理由及法律依據", "納稅義務人應就課稅或處罰之要件事實，負證明責任", "國稅局違法調查所取得之證據，不得作為認定課稅或處罰之基礎", "國稅局依職權調查證據，不受當事人主張之拘束，對有利及不利事項一律注意"], answer:1, explain:'' },
+  { id:'q113_23', law:"稅捐稽徵法", chapter:"稽徵", year:113, q:"依稅捐稽徵法規定，有關停止並追回納稅義務人享受租稅優惠待遇，下列敘述何者錯誤？", options:["納稅義務人逃漏稅捐情節重大者，財政部應停止並追回其違章行為所屬年度享受租稅優惠之待遇", "納稅義務人違反環境保護、勞工、食品安全衛生相關法律且情節重大，租稅優惠法律之中央主管機關應通知財政部停止並追回其違章行為所屬年度享受租稅優惠之待遇", "納稅義務人違反環境保護、勞工、食品安全衛生相關法律且情節重大，租稅優惠法律之中央主管機關應通知財政部停止並追回其違章行為所屬年度及以前年度享受租稅優惠之待遇", "停止並追回享受租稅優惠之待遇者，財政部應於該停止並追回處分確定年度之次年，公告納稅義務人之姓名或名稱"], answer:2, explain:'' },
+  { id:'q113_24', law:"稅捐稽徵法", chapter:"納稅者權利保護法", year:113, q:"依納稅者權利保護法規定，國稅局查得甲於111年2月間代償其子所積欠鉅額銀行借款，涉有應課徵贈與稅情事，乃發函請甲於指定期日至國稅局備詢，為保障甲受調查時之權利，下列敘述何者錯誤？", options:["甲因不諳稅法，可委請會計師陪同備詢，於代理人到場前，可拒絕陳述", "甲於到場接受調查時，得自行就調查過程錄影、錄音，以保障其權利", "國稅局依法行使調查權，有錄影、錄音之需要，亦應告知被調查者", "為維持稅捐調查秘密性，且經記明筆錄者，國稅局得拒絶錄影、錄音"], answer:1, explain:'' },
+  { id:'q113_25', law:"遺產贈與稅法", chapter:"稽徵程序", year:113, q:"甲112年1月31日死亡，死亡日遺有應課遺產稅的土地一筆公告現值新臺幣（下同）3,000萬元，以及國內上市公司T股票100,000股，當日收盤價每股100元，其應納之遺產稅為200萬元，因甲死亡後T公司之股票收盤價大幅下跌，故繼承人乃申請以T公司股票抵繳稅款，其得抵繳稅款之金額為多少？", options:["40萬元", "50萬元", "100萬元", "200萬元"], answer:1, explain:'' },
+  { id:'q114_01', law:"所得稅法", chapter:"綜合所得稅", year:114, q:"依所得稅法規定，公益信託之信託利益，其課稅時點及課稅主體為何？", options:["公益信託因具公益性質，不發生課稅問題", "於信託契約成立年度，對委託人課稅", "於所得發生年度，對受託人課稅", "於信託利益分配年度，對受益人課稅"], answer:3, explain:'' },
+  { id:'q114_02', law:"所得稅法", chapter:"營利事業所得稅", year:114, q:"下列那些交易免依所得稅法第4條之4規定適用房地合一稅制課徵所得稅？①105年1月5日取得一間40年的舊公寓並於110年12月31日出售 ②110年1月出售依農業發展條例申請興建之農舍 ③105年1月5日取得並於110年12月31日被徵收之土地及其土地改良物 ④106年間取得之全新電梯大樓，於110年7月31日虧損售出", options:["僅①②", "僅③④", "僅①④", "僅②③"], answer:3, explain:'' },
+  { id:'q114_03', law:"所得稅法", chapter:"綜合所得稅", year:114, q:"依所得稅法規定，下列所得何者應計入個人取得年度之綜合所得總額？", options:["於跳蚤市場拍賣個人過季二手衣物之交易所得", "將長輩贈送金塊於網路平臺出售之交易所得", "於我國證券交易市場出售國內投信業者發行ETF（Exchange Traded Funds）之交易所得", "擔任我國私立大學學生入學考試監考人員取得之報酬"], answer:1, explain:'' },
+  { id:'q114_04', law:"所得稅法", chapter:"綜合所得稅", year:114, q:"甲單身未婚，113年綜合所得總額1,000萬元，熱愛棒球，113年初即經由教育部設置的「個人捐贈運動員專戶」，指定捐贈特定運動員500萬元；同年5月5日捐贈300萬元，未指定特定運動員，若甲113年度無其他贈與行為，則甲113年度綜合所得稅捐贈列舉扣除額及應納贈與稅額分別為何？", options:["800萬元、0元", "700萬元、0元", "500萬元、5.6萬元", "300萬元、25.6萬元"], answer:2, explain:'' },
+  { id:'q114_05', law:"所得稅法", chapter:"營利事業所得稅", year:114, q:"甲公司經營塑膠原料批發業，113年度營利事業所得稅結算申報營業收入2,000萬元、非營業收入100萬元及非營業損失50萬元，甲公司如依擴大書面審核實施要點規定申報，當年度擴大書審純益率為6%，則甲公司應申報課稅所得額為多少元？", options:["220萬元", "170萬元", "126萬元", "123萬元"], answer:2, explain:'' },
+  { id:'q114_06', law:"所得稅法", chapter:"營利事業所得稅", year:114, q:"總機構在中華民國境外之影片事業在境內無分支機構而有營業代理人，113年度提供影片供境內營利事業放映使用，經約定影片不得重製及提供他人使用，且應於一定期限放映。設該影片事業113年度境內收入為1,000萬元，依所得稅法及相關規定，其課稅所得額為何？", options:["100萬元", "200萬元", "450萬元", "500萬元"], answer:3, explain:'' },
+  { id:'q114_07', law:"所得稅法", chapter:"營利事業所得稅", year:114, q:"下列交易何者應依所得稅法第4條之4規定，課徵房地合一所得稅？", options:["甲於民國90年買入房地一處，但因病於民國113年過世，該房地由其兒子繼承並立即出售", "乙於民國113年出售其於民國90年取得之未上市A公司股權，乙直接持有A公司股權過半數，且A公司股權之價值50%以上係由中華民國境內之房屋、土地所構成", "丙於民國113年出售房地，該房地係丙之配偶丁於民國100年購入，嗣後於民國110年贈與給丙", "戊於民國110年購入預售屋一處，於民國113年交屋完成移轉登記之後迄今未出售"], answer:1, explain:'' },
+  { id:'q114_08', law:"所得稅法", chapter:"營利事業所得稅", year:114, q:"個人交易符合所得稅法第4條之5房地合一所得稅制免稅範圍之下列房屋、土地，且計算結果為交易損失，何者仍應辦理申報？", options:["符合農業發展條例第37條及第38條之1規定得申請不課徵土地增值稅之土地", "被徵收或被徵收前先行協議價購之土地及其土地改良物", "尚未被徵收前移轉依都市計畫法指定之公共設施保留地", "適用自住房地租稅優惠之房屋、土地"], answer:3, explain:'' },
+  { id:'q114_09', law:"所得稅法", chapter:"所得基本稅額條例", year:114, q:"下列何者應依所得基本稅額條例之規定計算繳納所得基本稅額？", options:["獨資或合夥組織之營利事業", "符合行政院規定標準之教育、文化、公益、慈善機關或團體", "在中華民國境內無固定營業場所及營業代理人之營利事業", "所得稅結算申報適用投資抵減獎勵且其計算之基本所得額在新臺幣60萬元以上之營利事業"], answer:3, explain:'' },
+  { id:'q114_10', law:"所得稅法", chapter:"國際租稅", year:114, q:"個人及其關係人直接或間接持有在中華民國境外低稅負國家或地區之關係企業股份或資本額合計達50%以上或對該關係企業具有重大影響力，且該關係企業無所得稅法第43條之3第1項各款規定者，則於個人或其與配偶及二親等以內親屬合計持有該關係企業股份或資本額多少比率以上，該個人應將該關係企業當年度之盈餘，按其持有該關係企業股份或資本額之比率計算營利所得，計入當年度個人之基本所得額？", options:["2%", "5%", "10%", "20%"], answer:2, explain:'' },
+  { id:'q114_11', law:"所得稅法", chapter:"稽徵程序", year:114, q:"依所得稅法及相關規定，非中華民國居住者之個人，取得中華民國來源所得時，下列何者應依規定稅率申報納稅？", options:["利息", "權利金", "財產交易所得", "股利"], answer:2, explain:'' },
+  { id:'q114_12', law:"營業稅法", chapter:"稅率", year:114, q:"依加值型及非加值型營業稅法及相關法規規定，下列貨物或勞務何者適用之營業稅稅率非為零？", options:["非按進銷項差額課徵營業稅之小規模營業人外銷貨物", "依法設立之免稅商店銷售與過境或出境旅客之貨物", "銷售與國際運輸用之船舶、航空器及遠洋漁船所使用之修繕勞務", "保稅區營業人銷售與課稅區營業人未輸往課稅區而直接出口之貨物"], answer:0, explain:'' },
+  { id:'q114_13', law:"營業稅法", chapter:"總則", year:114, q:"下列何者係屬加值型及非加值型營業稅法所定義之「在中華民國境內銷售貨物」？", options:["高雄甲公司向日本A公司下訂單，並指定逕將貨物運送至香港交予甲公司之客戶", "韓國B公司依臺北乙公司之訂單，將貨物從韓國運送至臺北", "臺北丙公司將其位於境內之產品出口運送至新加坡客戶", "臺北丁公司將其投資在美國的土地售予高雄的戊公司"], answer:2, explain:'' },
+  { id:'q114_14', law:"營業稅法", chapter:"總則", year:114, q:"下列何者非屬加值型及非加值型營業稅法所稱之保稅區？", options:["政府核定之農業科技園區", "海關管理之保稅倉庫", "政府核定之自由貿易港區", "海關管理之離島免稅購物商店"], answer:3, explain:'' },
+  { id:'q114_15', law:"營業稅法", chapter:"稽徵", year:114, q:"依加值型及非加值型營業稅法及相關法規規定，營業人銷售貨物或勞務，應依加值型及非加值型營業稅法營業人開立銷售憑證時限表規定之時限，開立統一發票交付買受人。下列何者尚未屆開立銷售憑證時限表規定之時限？", options:["買賣業發貨前已收貨款者", "旅宿業提供住宿服務已預收取價款尚未結算者", "勞務承攬業已收取報酬者", "租賃業已收取租金者"], answer:1, explain:'' },
+  { id:'q114_16', law:"營業稅法", chapter:"稅額計算", year:114, q:"下列金融業經營依加值型及非加值型營業稅法營業人開立銷售憑證時限表特別規定欄所列非專屬本業之銷售額部分，何者不得申請依照加值型及非加值型營業稅法第4章第1節規定計算營業稅額，並依第35條規定申報繳納？", options:["銀行業", "保險業", "信託投資業", "證券業"], answer:3, explain:'' },
+  { id:'q114_17', law:"土地稅法", chapter:"土地增值稅", year:114, q:"依土地稅法及相關規定，已規定地價之土地移轉，下列何者免徵土地增值稅？", options:["私有土地捐贈政府", "社團法人之間贈與土地", "作農業使用之農業用地出售與非自然人", "信託關係存續中，受託人將信託土地有償移轉所有權為其自有土地"], answer:0, explain:'' },
+  { id:'q114_18', law:"稅捐稽徵法", chapter:"強制執行", year:114, q:"依稅捐稽徵法及相關法規規定，拍賣納稅義務人土地之價款，不足清償所有債務，有關受償順序，下列敘述何者正確？", options:["罰鍰準用有關稅捐之規定，優先普通債權受償", "以該土地設定抵押權擔保之債權，優先所得稅受償", "以該土地設定抵押權擔保之債權，優先該土地應課徵之土地增值稅受償", "營業稅欠稅，優先以該土地設定抵押權擔保之債權受償"], answer:1, explain:'' },
+  { id:'q114_19', law:"稅捐稽徵法", chapter:"行政救濟", year:114, q:"依稅捐稽徵法規定，納稅義務人對核定稅捐處分不服提起行政救濟，嗣於核課期間屆滿後，行政法院始撤銷該核定稅捐處分並命另為適法處分，稅捐稽徵機關應自該判決確定之日起多久內作成新處分？", options:["1年", "2年", "5年", "7年"], answer:0, explain:'' },
+  { id:'q114_20', law:"稅捐稽徵法", chapter:"稽徵", year:114, q:"依稅捐稽徵法規定，未設管理人之某祭祀公業，以全體派下員（甲、乙、丙、丁4人）為113年地價稅案件之納稅義務人，繳款書繳納期間自113年11月1日至113年11月30日，稅捐稽徵機關於113年10月22日將繳款書及核定稅額通知書送達甲；113年10月27日對乙、11月2日對丙、12月1日對丁送達核定稅額通知書，下列敘述何者正確？", options:["全部派下員之送達均合法，無須重新送達", "甲及乙之送達合法，丙及丁之送達不合法需重新送達", "僅有丁之送達不合法，只需對丁重新送達", "僅有甲之送達合法，乙、丙及丁之送達不合法需重新送達"], answer:0, explain:'' },
+  { id:'q114_21', law:"稅捐稽徵法", chapter:"強制執行", year:114, q:"依稅捐稽徵法第39條規定，下列何者非暫緩移送強制執行之事由？", options:["納稅義務人依法申請復查", "納稅義務人依法提起訴願，並就復查決定應納稅額繳納三分之一", "納稅義務人依法提起訴願，並經稅捐稽徵機關核准就復查決定應納稅額三分之一提供相當擔保", "納稅義務人依法提起訴願，並經稅捐稽徵機關已就相當於復查決定應納稅額三分之一之財產，通知有關機關不得為移轉或設定他項權利"], answer:3, explain:'' },
+  { id:'q114_22', law:"稅捐稽徵法", chapter:"稽徵", year:114, q:"依稅捐稽徵法第48條之1規定，關於納稅義務人自動補報補繳免罰，下列敘述何者錯誤？", options:["須在經人檢舉或稅捐稽徵機關調查前為之", "不論納稅義務人故意或過失逃漏稅，均有適用", "逃漏稅涉及刑事責任者，不得免除其刑", "應就補繳稅款，自該稅捐原繳納期限截止之次日起，至補繳之日止，按日加計利息"], answer:2, explain:'' },
+  { id:'q114_23', law:"稅捐稽徵法", chapter:"納稅者權利保護法", year:114, q:"依納稅者權利保護法規定，關於納稅義務人租稅規避，下列敘述何者錯誤？", options:["指利用規範漏洞及法律形式安排，規避原應課稅之租稅構成要件", "應按補繳稅款加徵10%滯納金及利息", "加徵滯納金及利息後，不另課予逃漏稅處罰", "就租稅規避案件接受調查時，對重要事項隱匿，致使稅捐稽徵機關短漏核定稅捐，應改按逃漏稅處罰"], answer:1, explain:'' },
+  { id:'q114_24', law:"稅捐稽徵法", chapter:"納稅者權利保護法", year:114, q:"依納稅者權利保護法及相關法令規定，下列何者非屬納稅者權利保護事項之適格申請人？", options:["對於進口貨物課徵關稅，其收貨人", "對於贈與土地課徵土地增值稅，其原土地之所有權人", "對於祀產土地課徵地價稅，其祭祀公業之管理人", "對於境內銷售貨物課徵營業稅，其營業人"], answer:1, explain:'' },
+  { id:'q114_25', law:"遺產贈與稅法", chapter:"遺產稅之計算", year:114, q:"依遺產及贈與稅法相關規定，下列敘述何者正確？", options:["被繼承人死亡前6年內繼承之財產已納遺產稅者，可全數不計入遺產課稅", "贈與稅一律以贈與人為納稅義務人", "被繼承人之祖父母如為重度身心障礙者，每人可自遺產總額中加扣身心障礙特別扣除額", "被繼承人死亡前應納未納之房屋稅及地價稅，可自遺產總額中扣除"], answer:3, explain:'' },
+];
+
+/**
+ * 字卡資料格式：
+ * {
+ *   id: 'f001',
+ *   type: '數字' | '條文',
+ *   law: '所得稅法',
+ *   q: '問題面',
+ *   a: '答案面',
+ *   source: '條號或出處'
+ * }
+ */
+const FLASHCARD_DATA = [
+  // ════════════════════════════════════════
+  //  房地合一稅 2.0（5年內考7次，最高頻考點）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字類（6 張）──
+  { id:'fh_n01', type:'數字', law:'所得稅法',
+    q:'房地合一稅的適用範圍（時間點）？',
+    a:'交易「105 年 1 月 1 日以後」取得的房屋、土地。\n（105.1.1 之前取得者仍適用舊制，併入綜合所得稅／營利事業所得稅）',
+    source:'所得稅法§4-4'
+  },
+
+  { id:'fh_n02', type:'數字', law:'所得稅法',
+    q:'個人（境內居住者）房地合一稅 2.0 稅率表？',
+    a:'持有期間：稅率\n• 2 年以內：45%\n• 超過 2 年，未逾 5 年：35%\n• 超過 5 年，未逾 10 年：20%\n• 超過 10 年：15%\n• 自住優惠：10%（課稅所得 400 萬內免）',
+    source:'所得稅法§14-4'
+  },
+
+  { id:'fh_n03', type:'數字', law:'所得稅法',
+    q:'非境內居住者個人房地合一稅率？',
+    a:'• 2 年以內：45%\n• 超過 2 年：35%\n（只有兩級，沒有 20%、15%）',
+    source:'所得稅法§14-4'
+  },
+
+  { id:'fh_n04', type:'數字', law:'所得稅法',
+    q:'即使持有期間在 5 年以下，仍維持 20% 稅率的 3 種情形？',
+    a:'① 非自願性因素（調職、非自願離職）\n② 自有土地與營利事業合建房屋，土地取得後 5 年內完成並銷售\n③ 參與都市更新或危老重建，取得房地後第一次移轉',
+    source:'所得稅法§14-4 第3項'
+  },
+
+  { id:'fh_n05', type:'數字', law:'所得稅法',
+    q:'房地合一稅「股權交易視同房地交易」的兩個門檻？',
+    a:'① 直接或間接持有過半（>50%）股份／出資額\n② 該營利事業股權價值 50% 以上 由境內房屋、土地構成\n（上市櫃股票除外）',
+    source:'所得稅法§4-4 第3項'
+  },
+
+  { id:'fh_n06', type:'數字', law:'所得稅法',
+    q:'重購自住房地退稅／抵稅的關鍵時間？',
+    a:'• 出售後 2 年內 重購，或 先購後 2 年內 出售\n• 重購後 5 年內 不得改作其他用途或再行移轉\n（違反則追繳原退抵稅額）\n• 出售與重購均須符合「自住」要件',
+    source:'所得稅法§14-8'
+  },
+
+  // ── 🟠 條文類（5 張）──
+  { id:'fh_t01', type:'條文', law:'所得稅法',
+    q:'房地合一稅 2.0 五大修法重點？',
+    a:'① 拉長短期重稅期間（45% 適用 2 年內、35% 適用 2~5 年）\n② 法人比照個人，按持有期間分開計稅\n③ 擴大課稅範圍（含 預售屋、特定股權交易）\n④ 土地漲價總數額設上限（按公告現值計算）\n⑤ 維持 5 種特殊情形 20% 稅率不變',
+    source:'所得稅法§4-4、§14-4'
+  },
+
+  { id:'fh_t02', type:'條文', law:'所得稅法',
+    q:'哪些房地交易免依房地合一稅課徵？（4 種免稅情形）',
+    a:'① 符合條件的「自住房地」（課稅所得 400 萬內免稅，超過部分 10%）\n② 農發條例§37、§38-1 之農地（不課徵土增稅者）\n③ 被徵收或先行協議價購之土地及改良物\n④ 移轉依都市計畫法指定之公共設施保留地',
+    source:'所得稅法§4-5'
+  },
+
+  { id:'fh_t03', type:'條文', law:'所得稅法',
+    q:'自住房地優惠的 6 項要件？',
+    a:'① 個人或其配偶、未成年子女辦竣戶籍登記\n② 持有並居住於該房屋連續滿 6 年\n③ 交易前 6 年內未出租、供營業或執行業務使用\n④ 個人與配偶及未成年子女於交易前 6 年內 未曾適用 本款\n⑤ 課稅所得 400 萬內免稅\n⑥ 超過 400 萬部分稅率 10%',
+    source:'所得稅法§4-5 第1項第1款、§14-4'
+  },
+
+  { id:'fh_t04', type:'條文', law:'所得稅法',
+    q:'自住房地交易若為「虧損」是否仍須申報？',
+    a:'須申報。\n適用「自住租稅優惠」之房地，雖計算結果為虧損仍應辦理申報。\n但其他 3 款免稅房地（農地、被徵收、公設保留地）若虧損則不須申報。',
+    source:'所得稅法§4-5 第1項但書'
+  },
+
+  { id:'fh_t05', type:'條文', law:'所得稅法',
+    q:'房地合一稅課稅所得計算公式？',
+    a:'課稅所得＝成交價額 － 取得成本 － 相關費用 － 土地漲價總數額\n\n應納稅額＝課稅所得 × 適用稅率\n\n（土地漲價總數額按「公告現值」計算，有上限）',
+    source:'所得稅法§14-4'
+  },
+
+  // ── 🟣 考題改編（2 張）──
+  { id:'fh_q01', type:'考題', law:'所得稅法',
+    q:'境外 A 公司 100% 持有「境外 B 公司」股權，B 公司股權價值 50% 以上由境內房屋土地構成，A 公司持有 B 不滿 1 年即出售。\n\nA 公司出售 B 股權之所得，我國如何課稅？',
+    a:'視同 房地合一稅交易。\n非境內居住者持有未逾 2 年 → 稅率 45%。\n\n關鍵：§4-4 第3項「股權交易視同房地交易」門檻\n  • 直接／間接持有過半\n  • 境內房地占 50%+\n→ 即使股權交易在境外，仍課我國房地合一稅。',
+    source:'所得稅法§4-4 第3項、§14-4'
+  },
+
+  { id:'fh_q02', type:'考題', law:'所得稅法',
+    q:'下列哪些情形「不適用」房地合一稅？\n① 105 年取得舊公寓，110 年出售\n② 110 年出售依農發條例申請興建之農舍\n③ 105 年取得並於 110 年被徵收之土地\n④ 106 年取得電梯大樓，110 年虧損售出',
+    a:'答案：②③\n\n② 農舍不屬於「房地」，§4-4 排除\n③ 被徵收土地，§4-5 第1項第3款免稅\n① 105 年後取得適用新制 → 課稅\n④ 106 年後取得適用新制，虧損仍要申報 → 課稅',
+    source:'所得稅法§4-4、§4-5；114 年 Q2 改編'
+  },
+
+  // ════════════════════════════════════════
+  //  所得基本稅額條例（最低稅負制，5年內考7次）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字類（5 張）──
+  { id:'fa_n01', type:'數字', law:'所得稅法',
+    q:'基本稅額：個人 vs 營利事業 的「稅率」與「扣除額」？',
+    a:'              扣除額      稅率\n個人          750 萬元      20%\n營利事業      60 萬元       12%\n\n（個人扣除額自 113 年度起由 670 萬調為 750 萬）\n（注意：稅率為基本稅額條例專用，非綜所稅率）',
+    source:'所得基本稅額條例§4、§8、§13'
+  },
+
+  { id:'fa_n02', type:'數字', law:'所得稅法',
+    q:'個人海外所得 計入基本所得額的門檻？',
+    a:'一申報戶全年海外所得：\n• < 100 萬元 → 免計入\n• ≥ 100 萬元 → 全數計入（非「超過部分」計入）\n\n（含港澳所得）',
+    source:'所得基本稅額條例§12 第1項第1款'
+  },
+
+  { id:'fa_n03', type:'數字', law:'所得稅法',
+    q:'特定保險給付（受益人 ≠ 要保人）計入基本所得額的門檻？',
+    a:'本條例施行後（94 年後）所訂立之人壽保險／年金保險，受益人受領之保險給付：\n\n死亡給付每一申報戶全年合計：\n• ≤ 3,740 萬元 → 免計入\n• > 3,740 萬元 → 超過部分計入\n\n（113 年度起由 3,330 萬調為 3,740 萬）',
+    source:'所得基本稅額條例§12 第1項第2款'
+  },
+
+  { id:'fa_n04', type:'數字', law:'所得稅法',
+    q:'個人 CFC（受控外國企業）：持股達多少％ 須將盈餘計入個人基本所得額？',
+    a:'個人或其與配偶及二親等以內親屬合計持股 ≥ 10%（或具重大影響力）\n\n且該關係企業位於低稅負國家或地區（稅率未逾我國 70%）\n\n注意門檻：\n• 50% 以上或重大影響力 → 視為 CFC\n• 個人或其關係人 10% 以上 → 個人才需計入',
+    source:'所得基本稅額條例§12-1'
+  },
+
+  { id:'fa_n05', type:'數字', law:'所得稅法',
+    q:'個人「同時符合」哪三個門檻，才需繳基本稅額？',
+    a:'① 海外所得 ≥ 100 萬元\n② 基本所得額 > 750 萬元\n③ 基本稅額〔(基本所得額－750 萬) × 20%〕> 一般所得稅額\n\n（三個條件 缺一不可）',
+    source:'所得基本稅額條例§3、§12、§13'
+  },
+
+  // ── 🟠 條文類（5 張）──
+  { id:'fa_t01', type:'條文', law:'所得稅法',
+    q:'個人基本所得額的「加項」？',
+    a:'綜合所得淨額 + 下列各項：\n\n① 海外所得（含港澳）≥ 100 萬全數加（未達免）\n② 特定保險給付（受益人 ≠ 要保人）\n   死亡給付每戶超過 3,740 萬部分計入\n③ 私募證券投資信託基金受益憑證交易所得\n④ 申報綜所稅減除之 非現金捐贈 金額\n⑤ 員工分紅配股 可處分日次日 時價超過 面額 之差額\n⑥ 其他經財政部公告之減免所得（含個人 CFC §12-1、未上市櫃股票交易所得）',
+    source:'所得基本稅額條例§12、§12-1'
+  },
+
+  { id:'fa_t02', type:'條文', law:'所得稅法',
+    q:'營利事業基本所得額的「加項」？',
+    a:'課稅所得額 + 下列各項：\n\n① 證券交易所得（§4-1 停徵）\n② 期貨交易所得（§4-2 停徵）\n③ 國際金融業務分行（OBU）免稅所得\n④ 廢止前促進產業升級條例之免稅所得\n⑤ 產業創新條例研發投資抵減「適用前」之研發支出加倍減除\n⑥ 國外營利事業 PEM 認列受控外國企業所得\n\n⚠ 注意：§42「不計入所得額之股利收入」非加項',
+    source:'所得基本稅額條例§7'
+  },
+
+  { id:'fa_t03', type:'條文', law:'所得稅法',
+    q:'個人基本稅額計算公式？',
+    a:'步驟 1：基本所得額 = 綜合所得淨額 + 5 項加項\n\n步驟 2：基本稅額 =（基本所得額 － 750 萬）× 20%\n\n步驟 3：比較\n• 基本稅額 ≤ 一般所得稅額 → 不必繳基本稅額\n• 基本稅額 > 一般所得稅額 → 差額另繳\n\n步驟 4：海外已納稅額可扣抵差額',
+    source:'所得基本稅額條例§13'
+  },
+
+  { id:'fa_t04', type:'條文', law:'所得稅法',
+    q:'營利事業基本稅額計算公式？',
+    a:'基本所得額 = 課稅所得額 + 各項加項\n\n基本稅額 =（基本所得額 － 60 萬）× 12%\n\n比較：\n• 基本稅額 ≤ 一般所得稅額 → 不必繳\n• 基本稅額 > 一般所得稅額 → 差額另繳\n（差額不得用投資抵減稅額抵減）',
+    source:'所得基本稅額條例§8'
+  },
+
+  { id:'fa_t05', type:'條文', law:'所得稅法',
+    q:'哪些「不適用」基本稅額條例？',
+    a:'下列「免」計算繳納基本稅額：\n\n① 獨資、合夥組織之營利事業（盈餘已併入個人綜所稅）\n② 教育、文化、公益、慈善機關或團體（合於§4-13）\n③ 在境內無固定營業場所及營業代理人之營利事業\n④ 非居住者個人（依§73 免辦結算申報者）\n⑤ 基本所得額 ≤ 扣除額（個人 750 萬、營利事業 60 萬）',
+    source:'所得基本稅額條例§3'
+  },
+
+  // ── 🟣 考題改編（2 張）──
+  { id:'fa_q01', type:'考題', law:'所得稅法',
+    q:'下列何者「免計入」個人基本所得額？\n(A) 96 年投保，要保人為父、受益人為甲之非死亡給付 100 萬\n(B) 出售境內私募證券投資信託基金受益憑證獲利 100 萬\n(C) 申報綜所稅時減除之非現金捐贈 100 萬\n(D) 出售美國公司股票獲利 80 萬',
+    a:'答案：(D)\n\n(D) 海外所得 < 100 萬，免計入\n(A) 94 年後投保非死亡給付屬加項\n(B) 私募基金交易所得屬加項\n(C) 非現金捐贈屬加項\n\n關鍵：海外所得 100 萬元門檻 是「全有全無」式',
+    source:'所得基本稅額條例§12；111 年 Q4 改編'
+  },
+
+  { id:'fa_q02', type:'考題', law:'所得稅法',
+    q:'營利事業計算基本所得額，下列何者「非屬」加項？\n(A) 停徵所得稅之證券交易所得\n(B) 產創條例研發加倍減除金額\n(C) 依§42 不計入所得額之股利或盈餘\n(D) 國金條例免徵營利事業所得稅之所得',
+    a:'答案：(C)\n\n§42 規定境內公司獲配境內公司股利「不計入所得額課稅」（避免重複課稅）\n→ 此本來就免稅，非基本稅額條例的加項\n\n其他 (A)(B)(D) 都是因「免稅／停徵」而成為加項',
+    source:'所得基本稅額條例§7；112 年 Q5 改編'
+  },
+
+  // ════════════════════════════════════════
+  //  進項稅額不得扣抵（5年內考3次，營業稅核心）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字／規則類（3 張）──
+  { id:'fb_n01', type:'數字', law:'營業稅法',
+    q:'§19 進項稅額不得扣抵銷項稅額的「5 款」情形？',
+    a:'① 未取得並保存§33 規定憑證者\n② 非供本業及附屬業務使用（但國防／慰勞軍隊／政府捐獻 例外）\n③ 交際應酬用之貨物或勞務\n④ 酬勞員工個人之貨物或勞務\n⑤ 自用乘人小汽車\n\n（再加上免稅貨物或勞務之進項稅額）',
+    source:'營業稅法§19'
+  },
+
+  { id:'fb_n02', type:'數字', law:'營業稅法',
+    q:'「自用乘人小汽車」的定義？哪些情況不算？',
+    a:'定義：非供銷售或提供勞務使用之「9 人座以下」乘人小汽車（§19 施行細則§26）\n\n非屬自用（可扣抵）：\n• 汽車買賣業／租賃業（商品庫存）\n• 載運員工上下班大型客車\n• 載運貨物小貨車\n• 客貨兩用車（9 人座以下接送旅客）',
+    source:'營業稅法§19、施行細則§26'
+  },
+
+  { id:'fb_n03', type:'數字', law:'營業稅法',
+    q:'二聯式統一發票（含稅）如何反算銷售額及銷項稅額？',
+    a:'公式：\n銷售額 = 含稅總額 ÷ 1.05\n銷項稅額 = 含稅總額 ÷ 1.05 × 0.05\n             或 = 含稅總額 ÷ 21\n\n例：三張發票 1,200+5,000+3,600 = 9,800\n銷售額 = 9,800 ÷ 1.05 ≈ 9,333',
+    source:'營業稅法§32；111 年 Q15'
+  },
+
+  // ── 🟠 條文／辨識類（5 張）──
+  { id:'fb_t01', type:'條文', law:'營業稅法',
+    q:'員工相關支出：哪些「可扣抵」？哪些「不可扣抵」？',
+    a:'❌ 不可扣抵（酬勞員工個人）：\n• 員工伙食費（主副食、廚房水電瓦斯）\n• 員工住宿房屋租金及水電瓦斯\n• 員工聚餐、康樂活動、員工旅行、員工生日禮品、惜別會等\n\n✅ 可扣抵（屬本業使用）：\n• 員工辦公處所使用衛生紙、香皂、茶葉、消費用品\n• 員工出差旅費（車票、住宿）\n• 工地施工人員住宿租金、水電（臨時）\n• 業務檢討會餐費（須備會議紀錄、簽到）\n• 員工自有車油料費（有書面約定）',
+    source:'營業稅法§19；財政部各號函釋'
+  },
+
+  { id:'fb_t02', type:'條文', law:'營業稅法',
+    q:'觀光飯店各種車輛的進項稅額，哪些可扣抵？',
+    a:'✅ 可扣抵：\n• 載運貨物用小貨車\n• 載運員工上下班大型客車（非小客車）\n• 至機場接送旅客之「客貨兩用車」（屬本業）\n\n❌ 不可扣抵：\n• 總經理專用 5 人座座車（自用乘人小汽車）',
+    source:'營業稅法§19；111 年 Q13'
+  },
+
+  { id:'fb_t03', type:'條文', law:'營業稅法',
+    q:'「視為銷售」（§3 第3項）的 4 種情形？視為銷售後如何開立發票？',
+    a:'§3 第3項 視為銷售：\n① 營業人以其產製、進口、購買供銷售之貨物轉供自用\n② 營業人以貨物無償移轉他人所有\n③ 解散或廢止營業之存貨\n④ 受託代購代銷貨物\n\n👉 視為銷售時，按「時價」開立統一發票（非銷貨成本）\n例：贈與績優經銷商小汽車 → 按時價開發票',
+    source:'營業稅法§3 第3項；110 年 Q3'
+  },
+
+  { id:'fb_t04', type:'條文', law:'營業稅法',
+    q:'跨境電商交易，何種情形「免由海關代徵」營業稅？',
+    a:'❌ 海關代徵（一般進口）：實體貨物進口（如進口衣物、機器設備）→ 由海關代徵\n\n✅ 免海關代徵：跨境電商「電子勞務」（如下載電子書、串流影音）→ 由境外電商辦理稅籍登記自行報繳，或由買受人申報\n\n關鍵：是否經海關通關\n• 有實體 → 海關代徵\n• 純電子勞務 → 不經海關，免代徵',
+    source:'營業稅法§2-1、§9；110 年 Q7'
+  },
+
+  { id:'fb_t05', type:'條文', law:'營業稅法',
+    q:'§19 第1項第2款「非供本業及附屬業務」的「例外」？',
+    a:'下列三種雖非供本業使用，仍「准予扣抵」：\n\n① 協助國防建設\n② 慰勞軍隊\n③ 對政府之捐獻\n\n（基於政策鼓勵公益／國防目的）',
+    source:'營業稅法§19 第1項第2款但書'
+  },
+
+  // ── 🟣 考題改編（2 張）──
+  { id:'fb_q01', type:'考題', law:'營業稅法',
+    q:'下列進項稅額何者「不得」扣抵銷項稅額？\n(A) 辦理員工伙食\n(B) 業務檢討會餐費\n(C) 員工於辦公處所使用衛生紙\n(D) 為工程施工需要供施工人員住宿之租金',
+    a:'答案：(A)\n\n(A) 員工伙食 → 不得扣抵（屬「酬勞員工」§19 第4款，財政部 75 台財稅 7526396 號函）\n\n以下皆 可以 扣抵（屬業務有關）：\n(B) 業務檢討會餐費（須有會議紀錄、簽到簿）— 賦稅署 75 台稅二發 7523449 號函\n(C) 辦公處所員工共用衛生紙、茶葉 — 75 台財稅 7567454 號函\n(D) 工地施工人員臨時住宿房屋租金 — 75 台財稅 7577198 號函',
+    source:'營業稅法§19；110 年 Q4'
+  },
+
+  { id:'fb_q02', type:'考題', law:'營業稅法',
+    q:'下列何種進項憑證「不得」申報扣抵銷項稅額？\n(A) 視為銷售自行開立之發票\n(B) 電信公司開立載有公司抬頭之電信費發票\n(C) 購買供一般員工使用的自用乘人小客車發票\n(D) 預付訂金所開立之發票',
+    a:'答案：(C)\n\n(C) 自用乘人小汽車 → §19 第1項第5款 明文不得扣抵\n\n(A) 視為銷售可扣抵（已含營業稅）\n(B) 電信費屬本業必要支出\n(D) 預付訂金按進度開發票，可扣抵',
+    source:'營業稅法§19；110 年 Q16'
+  },
+
+  // ════════════════════════════════════════
+  //  限制出境（5年內考3次）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字類（3 張）──
+  { id:'fc_n01', type:'數字', law:'稅捐稽徵法',
+    q:'限制出境的金額門檻（個人 vs 營利事業）？',
+    a:'已確定欠稅及罰鍰：\n• 個人 ≥ 100 萬元\n• 營利事業 ≥ 200 萬元\n\n行政救濟程序終結前（未確定）：\n• 個人 ≥ 150 萬元\n• 營利事業 ≥ 300 萬元\n\n（營利事業 → 限制其「負責人」出境）',
+    source:'稅捐稽徵法§24 第3項'
+  },
+
+  { id:'fc_n02', type:'數字', law:'稅捐稽徵法',
+    q:'限制出境的最長期間？',
+    a:'自移民署限制出境之日起，最長 5 年。\n\n（必要時得延長，但每次延長亦不得逾 5 年）\n\n常考陷阱：\n❌ 不得逾 7 年\n❌ 不得逾 10 年',
+    source:'稅捐稽徵法§24 第3項第2款'
+  },
+
+  { id:'fc_n03', type:'數字', law:'稅捐稽徵法',
+    q:'函請解除出境限制的 6 種情形？',
+    a:'① 限制出境已逾 5 年\n② 已繳清全部欠稅及罰鍰，或提供相當擔保\n③ 行政救濟撤銷須另為處分確定（一部撤銷例外）\n④ 救濟及處罰終結，欠稅未達標準\n⑤ 公司／有限合夥已解散清算，無賸餘財產\n⑥ 依破產法之和解或破產程序分配完結',
+    source:'稅捐稽徵法§24 第4項'
+  },
+
+  // ── 🟠 條文類（3 張）──
+  { id:'fc_t01', type:'條文', law:'稅捐稽徵法',
+    q:'限制出境的「程序要件」？',
+    a:'① 由「財政部」函請「內政部移民署」限制（非國稅局直接）\n② 應同時以書面 敘明理由 及附記救濟程序通知當事人\n③ 須先實施稅捐保全措施（§24 第1項）\n④ 已提供相當擔保者 不得 限制\n\n（限制負責人出境的對象：營利事業）',
+    source:'稅捐稽徵法§24 第3項'
+  },
+
+  { id:'fc_t02', type:'條文', law:'稅捐稽徵法',
+    q:'稅捐保全措施（§24 第1項）有哪些？哪些「不是」？',
+    a:'✅ 屬租稅保全措施：\n① 通知不得移轉或設定他項權利（禁止處分登記）\n② 聲請法院實施假扣押\n③ 限制減資登記（營利事業）\n④ 限制出境（§24 第3項）\n\n❌ 不是租稅保全措施：\n• 聲請法院裁定 拘提管收（屬行政執行法）',
+    source:'稅捐稽徵法§24；112 年 Q23'
+  },
+
+  { id:'fc_t03', type:'條文', law:'稅捐稽徵法',
+    q:'對限制出境處分不服，如何救濟？',
+    a:'限制出境屬「行政處分」，可提起行政救濟：\n→ 訴願（向財政部訴願會）→ 行政訴訟\n\n常考陷阱：\n❌ 對限制出境處分不服 → 向稅捐機關「申請復查」（錯）\n（復查係針對「核定稅捐處分」，限制出境本身不需復查）',
+    source:'稅捐稽徵法§24；113 年 Q19'
+  },
+
+  // ════════════════════════════════════════
+  //  核課期間 / 徵收期間（5年內考3次）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字類（3 張）──
+  { id:'fd_n01', type:'數字', law:'稅捐稽徵法',
+    q:'核課期間：5 年 vs 7 年的判斷？',
+    a:'5 年：\n① 已在期間內 申報、無詐欺逃漏（自申報日起算）\n② 印花稅、稽徵機關依稅籍底冊核定者（自所屬徵期屆滿翌日起算）\n\n7 年：\n③ 未於規定期間內申報，或 故意 以詐欺或其他不正當方法逃漏稅捐\n（自規定申報期間屆滿翌日起算）',
+    source:'稅捐稽徵法§21 第1項'
+  },
+
+  { id:'fd_n02', type:'數字', law:'稅捐稽徵法',
+    q:'徵收期間多久？逾期不再執行的規定？',
+    a:'徵收期間：5 年（自繳納期限屆滿翌日起算）\n→ 5 年內未徵起 → 不得再行徵收\n\n移送執行：\n• 徵收期間屆滿前已移送執行\n• 自徵收屆滿翌日起 5 年內未執行 → 不再執行\n• 5 年內已開始執行，但已逾 5 年尚未終結 → 不得再執行',
+    source:'稅捐稽徵法§23'
+  },
+
+  { id:'fd_n03', type:'數字', law:'稅捐稽徵法',
+    q:'退稅期限（溢繳稅款）有幾種？',
+    a:'納稅義務人申請退稅期限：\n\n① 因適用法令、計算或填寫錯誤致溢繳 → 自繳納之日起 10 年內\n\n② 因稅捐機關適用稅法錯誤、計算錯誤、其他原因 → 自繳納之日起 15 年內\n\n（111 年 Q20：稅率錯誤致溢繳 → 15 年）',
+    source:'稅捐稽徵法§28；111 年 Q20'
+  },
+
+  // ── 🟠 條文類（2 張）──
+  { id:'fd_t01', type:'條文', law:'稅捐稽徵法',
+    q:'核課期間「時效不完成」的事由？',
+    a:'核課期間屆滿時，有下列情形之一者，時效不完成：\n\n① 行政救濟尚未終結，自撤銷須另為處分確定日起 算 1 年\n② 天災、事變或不可抗力，自妨礙事由消滅日起 算 6 個月\n\n核定稅捐處分經納稅義務人於核課期間屆滿後申請復查，亦準用①\n\n（114 年 Q19：判決確定後 1 年內作新處分）',
+    source:'稅捐稽徵法§21 第3項；114 年 Q19'
+  },
+
+  { id:'fd_t02', type:'條文', law:'稅捐稽徵法',
+    q:'核課期間 vs 徵收期間 怎麼分？',
+    a:'核課期間（§21）：\n• 國稅局「核定／補徵」稅捐的期限\n• 5 年或 7 年\n• 從「申報日／所屬徵期屆滿翌日」起算\n\n徵收期間（§23）：\n• 已核定但未繳，國稅局「徵起」稅捐的期限\n• 5 年\n• 從「繳納期限屆滿翌日」起算\n\n👉 順序：核課 → 徵收 → 強制執行',
+    source:'稅捐稽徵法§21、§23'
+  },
+
+  // ── 🟣 考題改編（1 張）──
+  { id:'fd_q01', type:'考題', law:'稅捐稽徵法',
+    q:'甲未依規定辦理 108 年度綜合所得稅結算申報及繳納，嗣經國稅局查獲甲漏報 108 年度財產交易所得，本件核課期間於何時屆滿？\n(A) 114年5月31日 (B) 114年6月30日 (C) 116年5月31日 (D) 116年6月30日',
+    a:'標準答案：(D) 116 年 6 月 30 日\n\n計算（7 年核課）：\n① 未申報 → 核課期間 7 年（§21 第1項第3款）\n② 起算日：規定申報期間屆滿翌日（§22 第2款）\n③ 108 年度綜所稅申報期間因「疫情」延長至 109 年 6 月 30 日\n④ 起算日 = 109/7/1\n⑤ 7 年屆滿 = 116/6/30\n\n⚠ 關鍵：108 年度申報期間 109 年因疫情特別延至 6/30（一般年份是 5/31）',
+    source:'稅捐稽徵法§21、§22；110 年 Q19'
+  },
+
+  // ════════════════════════════════════════
+  //  免徵營業稅（5年內考4次，每年都考）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字／重點類（2 張）──
+  { id:'fe_n01', type:'數字', law:'營業稅法',
+    q:'§8 免徵營業稅 33 款的「重點分類」？',
+    a:'① 土地（出售之土地）\n② 農田灌溉用水\n③ 醫療勞務、藥品、病房住宿膳食\n④ 社會福利、勞工團體勞務\n⑤ 學校、幼稚園、教育文化機構勞務\n⑥ 教科書、學術專門著作\n⑦ 報社、雜誌、通訊社、廣播電視之本業 ⚠（但廣告 不在內）\n⑧ 合作社、農漁工商會與會員交易\n⑨ 慈善義賣\n⑩ 監獄工廠\n⑪ 生鮮農林漁牧產品（自產或批發）\n⑫ 碾米、麵粉、肥料、農藥\n⑬ 金條、金塊、金片（但加工費不在內）\n⑭ 不動產出售之固定資產\n（共 33 款，僅列重點）',
+    source:'營業稅法§8'
+  },
+
+  { id:'fe_n02', type:'數字', law:'營業稅法',
+    q:'§9 進口免徵營業稅的 3 種貨物？',
+    a:'① §7⑥（國際運輸用之船舶、航空器、遠洋漁船）\n  §8①㉗（肥料、農牧用藥、農耕機器）\n  §8①㉚（金條、金塊、金片、金幣、純金飾金）\n  之貨物\n② 關稅法§49 規定之免稅貨物（但轉讓或變更用途補繳關稅者，補繳營業稅）\n③ 本國之古物\n\n⚠ 注意：外國古物 不免徵（需海關代徵）',
+    source:'營業稅法§9'
+  },
+
+  // ── 🟠 條文／陷阱類（3 張）──
+  { id:'fe_t01', type:'條文', law:'營業稅法',
+    q:'報社／雜誌／廣播電視 哪些免稅、哪些「不」免稅？',
+    a:'§8 第9款 原則 免稅：\n• 報紙、出版品、通訊稿\n• 廣告、節目播映、節目播出\n\n但書 不免稅（仍課營業稅）：\n• 報社 銷售之 廣告\n• 電視臺 之 廣告播映\n\n👉 重點區分：\n✅ 雜誌社／廣播電臺 的廣告 → 免稅\n❌ 報社／電視臺 的廣告 → 不免稅\n\n（111 年 Q12：報社銷售廣告及電視臺廣告播映 為不免稅）',
+    source:'營業稅法§8 第1項第9款；111 年 Q12'
+  },
+
+  { id:'fe_t02', type:'條文', law:'營業稅法',
+    q:'醫療相關勞務 哪些免稅、哪些「不」免稅？',
+    a:'✅ 免徵：\n• 醫院、診所、療養院 提供之醫療勞務、藥品、病房住宿、膳食\n• 學校國小兒童課後照顧服務\n• 私立學校之教育勞務（含遊學服務）\n\n❌ 不免徵：\n• 產後護理機構 收取之住房費（不屬醫療勞務）\n\n（113 年 Q13）',
+    source:'營業稅法§8 第3款；113 年函釋'
+  },
+
+  { id:'fe_t03', type:'條文', law:'營業稅法',
+    q:'農產品免稅 vs 加工品的分界？',
+    a:'✅ 免徵（生鮮、未加工）：\n• 糙米、水果、原木、家禽家畜、漁產（自產或批發）\n• 碾米加工、肥料、農藥\n\n❌ 不免徵（加工品）：\n• 香腸（加工肉品）\n• 麵包、餅乾（加工食品）\n• 麵粉（雖列免稅，但小規模批發＋加工另有規定）\n\n（112 年 Q16）',
+    source:'營業稅法§8 第19款；112 年 Q16'
+  },
+
+  // ════════════════════════════════════════
+  //  土地增值稅 免徵 vs 不課徵（5年內考4次）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字／規則類（2 張）──
+  { id:'fg_n01', type:'數字', law:'土地稅法',
+    q:'土增稅重購退稅（§35）的 5 個要件？',
+    a:'① 性質相同：出售與重購均為自用住宅、自營工廠、自耕農地\n② 時間：完成移轉登記日起 2 年內重購（或先購 2 年內出售）\n③ 面積限制：都市土地 ≤ 3 公畝；非都市 ≤ 7 公畝（自宅）\n④ 使用：出售前 1 年內未出租或營業使用\n⑤ 價格：新購地價 > 原出售地價 － 已納土增稅\n\n👉 重購地 5 年內不得改作他用或再移轉（§37），否則追繳',
+    source:'土地稅法§35、§37'
+  },
+
+  { id:'fg_n02', type:'數字', law:'土地稅法',
+    q:'自用住宅用地補申請改按自用住宅稅率的期限？',
+    a:'土地所有權人出售自用住宅用地，原申請按一般用地稅率課徵，得於「繳納期間屆滿前」向稽徵機關補行申請改按自用住宅用地稅率核課\n\n（113 年 Q16）',
+    source:'土地稅法§34-1'
+  },
+
+  // ── 🟠 條文／辨識類（4 張）──
+  { id:'fg_t01', type:'條文', law:'土地稅法',
+    q:'土增稅「免徵」 vs 「不課徵」的最大差別？',
+    a:'免徵（§28、§28-1、§39-1）：\n• 性質：租稅之 免除\n• 原地價：重新核計（下次以此次申報移轉現值為原地價）\n• 結果：稅捐永久消滅\n\n不課徵（§28-2、§28-3、§39、§39-2）：\n• 性質：租稅之 遞延（暫時不課）\n• 原地價：不變（下次移轉時，仍按原始原地價計算）\n• 結果：稅捐延後到下次再課',
+    source:'土地稅法§28~§39-2'
+  },
+
+  { id:'fg_t02', type:'條文', law:'土地稅法',
+    q:'土增稅「免徵」的 6 種情形（§28）？',
+    a:'① 因繼承而移轉之土地\n② 各級政府出售或依法贈與之公有土地\n③ 受贈之私有土地（受贈人為各級政府或公立教育機構）\n④ 私人捐贈興辦社福、私校之土地（§28-1，需符合 3 條件）\n⑤ 被徵收之土地（含協議價購）\n⑥ 公共設施保留地 移轉（§39）\n\n👉 重點：私有土地捐贈政府 → 免徵\n（114 年 Q17）',
+    source:'土地稅法§28、§28-1、§39'
+  },
+
+  { id:'fg_t03', type:'條文', law:'土地稅法',
+    q:'土增稅「不課徵」的 4 種情形？',
+    a:'① 配偶相互贈與之土地（§28-2）\n② 土地為信託財產（§28-3）\n③ 作農業使用之農業用地移轉與「自然人」（§39-2）\n④ 公共設施保留地移轉（部分情形屬§39 不課徵）\n\n⚠ 陷阱：作農業使用的農業用地\n  • 移轉與「自然人」→ 不課徵 ✅\n  • 移轉與「法人／非自然人」→ 課徵 ❌\n\n（112 年 Q19）',
+    source:'土地稅法§28-2、§28-3、§39、§39-2'
+  },
+
+  { id:'fg_t04', type:'條文', law:'土地稅法',
+    q:'信託土地的土增稅／地價稅 納稅義務人？',
+    a:'地價稅納稅義務人（§3-1）：\n• 信託關係存續中 → 「受託人」為納稅義務人\n• 但與受託人本身之土地分別計算\n\n土增稅：\n• 受託人「依信託本旨」移轉 → 不課徵（§28-3）\n• 受託人「自有用途」移轉 → 課徵\n\n（113 年 Q17：信託土地之地價稅納稅義務人為受託人乙）',
+    source:'土地稅法§3-1、§28-3；113 年 Q17'
+  },
+
+  // ── 🟣 考題改編（1 張）──
+  { id:'fg_q01', type:'考題', law:'土地稅法',
+    q:'A 公司於 110/7/1 出售自營工廠用地，申報移轉現值 6,000 萬元，繳土增稅 800 萬元；於 110/12/1 重購自營工廠用地，申報移轉現值 5,600 萬元。可申請退還多少土增稅？',
+    a:'答案：400 萬元（B）\n\n計算：\n新購地價 5,600 萬 > 原出售地價 6,000 萬 － 已納土增稅 800 萬 = 5,200 萬 ✅ 符合\n\n退稅金額 = min(已納土增稅, 新購地價 － 已扣除後餘額)\n         = min(800, 5,600 － 5,200)\n         = 400 萬元\n\n👉 公式：退稅 = 新購地價 － (原出售地價 － 已納土增稅)\n（111 年 Q17）',
+    source:'土地稅法§35；111 年 Q17'
+  },
+
+  // ════════════════════════════════════════
+  //  股利課稅方式：合併 vs 28% 分開（5年內考3次）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字／規則類（2 張）──
+  { id:'fi_n01', type:'數字', law:'所得稅法',
+    q:'股利課稅 2 種方式（§15 第4、5項）的計算公式？',
+    a:'方式一：合併計稅（併入綜合所得）\n• 股利可抵減稅額 = 全戶股利合計 × 8.5%\n• 每一申報戶 上限 8 萬元\n• 適合：稅率 ≤ 20% 之納稅人\n\n方式二：分開計稅\n• 股利 不計入 綜合所得淨額\n• 全戶股利合計 × 28% = 應納稅額\n• 適合：稅率 30% 以上 之高所得',
+    source:'所得稅法§15 第4、5項'
+  },
+
+  { id:'fi_n02', type:'數字', law:'所得稅法',
+    q:'股利合併計稅 抵減上限 8 萬元，反算股利收入多少時 剛好抵滿？',
+    a:'80,000 ÷ 8.5% ≒ 941,176 元\n\n👉 股利收入 ≤ 約 94 萬元 採合併計稅時，8.5% 可全額抵減\n\n超過 94 萬元 → 抵減仍封頂 8 萬\n（這時要評估合併 vs 分開哪個有利）',
+    source:'所得稅法§15 第4項'
+  },
+
+  // ── 🟠 條文／辨識類（2 張）──
+  { id:'fi_t01', type:'條文', law:'所得稅法',
+    q:'哪些「股利或盈餘」可選擇 28% 分開計稅？',
+    a:'依§15 第5項，下列均可選擇分開計稅：\n\n✅ 可分開：\n① 國內公司分配之 股利\n② 合作社 分配之盈餘\n③ 有限合夥 事業分配之盈餘\n\n❌ 不可分開：\n• 獨資、合夥事業分配之盈餘（已依§14 第1類營利所得課徵）\n• 大陸地區公司分配之股利（依兩岸條例另定）\n• 國外公司分配之股利（屬海外所得）',
+    source:'所得稅法§15 第5項；113 年 Q2'
+  },
+
+  { id:'fi_t02', type:'條文', law:'所得稅法',
+    q:'選擇 28% 分開計稅有什麼「副作用」？',
+    a:'⚠ 採 28% 分開計稅後：\n\n① 股利仍須計入「個人基本所得額」\n  → 採分開計稅之股利屬基本稅額條例§12 加項\n  （113 年 Q8：採 28% 分開計稅的股利仍計入基本所得額）\n\n② 捐贈列舉扣除額上限受影響\n  → 上限 = 綜合所得總額 20%，股利不在總額中\n  → 高捐贈者扣除上限會降低\n\n③ 排富條款仍以「全戶基本所得額」判斷',
+    source:'所得稅法§15、§17；基本稅額條例§12'
+  },
+
+  // ── 🟣 考題改編（1 張）──
+  { id:'fi_q01', type:'考題', law:'所得稅法',
+    q:'納稅義務人甲 112 年度有下列股利或盈餘，何者「不得」適用 28% 分開計稅？\n(A) 獲配國內公司分配 111 年度之股利\n(B) 獲配合作社分配 111 年度之盈餘\n(C) 獲配獨資合夥事業分配 111 年度之盈餘\n(D) 獲配有限合夥事業分配 111 年度之盈餘',
+    a:'答案：(C)\n\n獨資、合夥事業之盈餘 → 已直接歸課於出資者個人之「營利所得」（§14 第1類）\n→ 不再屬於「股利或盈餘」性質\n→ 不得選 28% 分開計稅\n\n（113 年 Q2）',
+    source:'所得稅法§15 第5項；113 年 Q2'
+  },
+
+  // ════════════════════════════════════════
+  //  國際租稅 CFC／PEM／國外稅額扣抵（5年內考5次）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字／規則類（3 張）──
+  { id:'fj_n01', type:'數字', law:'所得稅法',
+    q:'CFC（受控外國企業）的「持股門檻」？個人 vs 營利事業？',
+    a:'營利事業 CFC（§43-3）：\n• 營利事業及其關係人 直接或間接 持股 ≥ 50%\n• 或對該關係企業具重大影響力\n• 自 112 年度施行\n\n個人 CFC（基本稅額條例§12-1）：\n• 條件 1：CFC 本身（持股 ≥ 50%）\n• 條件 2：個人＋配偶＋二親等以內親屬合計 持股 ≥ 10%\n→ 個人才需將盈餘計入基本所得額\n\n👉 兩者門檻不同：CFC 認定 50%、個人計入 10%',
+    source:'所得稅法§43-3；基本稅額條例§12-1'
+  },
+
+  { id:'fj_n02', type:'數字', law:'所得稅法',
+    q:'「低稅負國家或地區」的判斷標準？',
+    a:'符合下列任一條件：\n\n① 該國／地區「營利事業所得稅率」未逾我國 §5 第5項第2款稅率的 70%\n   → 我國稅率 20% × 70% = 14%\n   → 即外國稅率 < 14% 屬低稅負地區\n\n② 該國僅對「境內來源所得」課稅\n   （例：開曼群島不對境外所得課稅）\n\n👉 例：BVI、開曼、薩摩亞 屬低稅負地區',
+    source:'所得稅法§43-3 第2項；§5 第5項'
+  },
+
+  { id:'fj_n03', type:'數字', law:'所得稅法',
+    q:'國外稅額扣抵的計算公式？',
+    a:'扣抵公式：取下列兩者孰低\n\n① 國外實際已納稅額\n② 國外所得 × 國內適用稅率（差額）\n  = (含國外所得之全年應納稅額) － (僅國內所得之應納稅額)\n\n⚠ 注意：\n• 各國分別計算？ ❌ 改為「全部國外所得合計」計算（包括有虧損的國家）\n• 國外虧損 不能 直接扣抵國內所得\n• 113 年 Q5：日本虧損 300 萬「不參與扣抵限額計算」',
+    source:'所得稅法§3 第2項'
+  },
+
+  // ── 🟠 條文／辨識類（4 張）──
+  { id:'fj_t01', type:'條文', law:'所得稅法',
+    q:'CFC 制度的 2 大「豁免」？',
+    a:'符合下列任一條件，CFC 不適用：\n\n① 有「實質營運活動」\n  • 在當地有固定營業場所及僱用員工\n  • 主要營業活動在當地進行\n  • 非單純「被動性收入」（股利、權利金、利息、投資收益）為主\n\n② 當年度盈餘「在一定基準以下」\n  • 個別 CFC 盈餘 ≤ 700 萬元 免列入\n  • 但所有 CFC 盈餘合計 > 700 萬 → 仍要列入',
+    source:'所得稅法§43-3 第1項；CFC 適用辦法'
+  },
+
+  { id:'fj_t02', type:'條文', law:'所得稅法',
+    q:'PEM（實際管理處所）的 3 大認定要件？',
+    a:'依§43-4 第2項，須「同時」符合 3 條件：\n\n① 作成 重大經營管理決策者 為「中華民國境內居住之個人」或「總機構在境內之營利事業」\n② 財務報表、會計帳簿之製作或儲存處所 在境內\n③ 在境內 實際執行 主要經營活動\n\n👉 視為「總機構在境內」的營利事業 → 全球所得均要課稅\n（注意：(B) 實際資金來源地為境內 不是 PEM 要件，常考陷阱）\n\n（113 年 Q7：B 為錯誤選項）',
+    source:'所得稅法§43-4；113 年 Q7'
+  },
+
+  { id:'fj_t03', type:'條文', law:'所得稅法',
+    q:'非居住者個人取得中華民國來源所得，如何課稅？',
+    a:'原則：採「扣繳就源課稅」（不辦結算申報）\n\n但下列須申報納稅：\n• 財產交易所得（無扣繳義務人）\n• 自力耕作、漁、牧、林、礦所得\n• 其他所得（非屬扣繳項目）\n\n常見扣繳率（非居住者）：\n• 股利、利息、權利金：21%\n• 薪資：18%（境內 < 183 天）\n• 租金：20%\n\n（114 年 Q11：財產交易所得 需申報納稅）',
+    source:'所得稅法§73、§88；114 年 Q11'
+  },
+
+  { id:'fj_t04', type:'條文', law:'所得稅法',
+    q:'跨境電商銷售電子勞務予「境內自然人」的課稅？',
+    a:'營業稅：\n• 年銷售額 > 48 萬元 → 應辦稅籍登記，自行報繳營業稅 5%\n\n所得稅：\n• 屬中華民國來源所得（§8）\n• 飯店、平台手續費等 →「給付者扣繳」\n• 「居住者個人」消費電子勞務 → 不需扣繳所得稅（給付者為自然人，無扣繳義務）\n• B2B（境內營利事業給付） → 應扣繳\n\n（113 年 Q1：(A) 為錯誤選項，跨境電商手續費屬境內來源所得）',
+    source:'營業稅法§28-1、§9；所得稅法§8；113 年 Q1'
+  },
+
+  // ── 🟣 考題改編（1 張）──
+  { id:'fj_q01', type:'考題', law:'所得稅法',
+    q:'甲公司 112 年度境內所得 1,000 萬，美國分公司所得 800 萬（已納美稅 180 萬），日本分公司虧損 300 萬。可扣抵之國外所得稅額為多少？',
+    a:'答案：100 萬元（D）\n\n計算（境外所得合計，不分國家）：\n① 境外淨所得 = 800 (美) － 300 (日) = 500 萬\n② 全部所得 = 1,000 + 500 = 1,500 萬\n③ 全部應納稅額 = 1,500 × 20% = 300 萬\n④ 僅境內應納 = 1,000 × 20% = 200 萬\n⑤ 國外稅額扣抵限額 = 300 － 200 = 100 萬\n⑥ 取 min(美國已納 180, 限額 100) = 100 萬\n\n（113 年 Q5）',
+    source:'所得稅法§3 第2項；113 年 Q5'
+  },
+
+  // ════════════════════════════════════════
+  //  列舉扣除額（5年內考4次）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字／規則類（2 張）──
+  { id:'fk_n01', type:'數字', law:'所得稅法',
+    q:'§17 列舉扣除額 5 項目的金額上限？',
+    a:'1. 捐贈：上限 綜合所得總額 × 20%\n   • 國防／勞軍／政府 捐贈 無金額限制\n2. 保險費：每人每年 ≤ 2.4 萬\n   • 全民健保 不受限\n3. 醫藥及生育費：核實扣除（無上限）\n   • 須付給公立或健保特約醫院\n   • 受保險給付部分不得扣除\n4. 災害損失：核實扣除（無上限）\n   • 不可抗力之災害\n   • 受保險賠償或救濟金部分不得扣除\n5. 購屋借款利息：每戶上限 30 萬\n   • 須減除「儲蓄投資特別扣除額」後餘額\n   • 僅一屋，配偶及未成年子女戶籍登記',
+    source:'所得稅法§17 第1項第2款第2目'
+  },
+
+  { id:'fk_n02', type:'數字', law:'所得稅法',
+    q:'列舉扣除額 4 項目的「適用對象」差異？',
+    a:'⚠ 關鍵：直系 vs 一般 vs 受扶養親屬\n\n• 捐贈：納稅義務人、配偶 及 受扶養親屬（所有）\n• 保險費：納稅義務人、配偶 或 受扶養 直系親屬（限直系）\n• 醫藥生育費：納稅義務人、配偶 或 受扶養親屬（所有）\n• 災害損失：納稅義務人、配偶 或 受扶養親屬（所有，非限直系）\n\n👉 113 年 Q4：(B) 災害損失「限直系」為錯誤（應為「所有受扶養親屬」）',
+    source:'所得稅法§17；113 年 Q4'
+  },
+
+  // ── 🟠 條文／辨識類（3 張）──
+  { id:'fk_t01', type:'條文', law:'所得稅法',
+    q:'扣除額三大類：標準、列舉、特別 怎麼選？',
+    a:'1. 標準扣除額（與列舉「擇一」）\n   • 個人 12 萬元；有配偶 加倍（24 萬元）\n2. 列舉扣除額（與標準「擇一」）\n   • 捐贈、保險費、醫藥生育、災害\n   • 自用住宅購屋借款利息（上限 30 萬）\n   • 房屋租金支出（上限 12 萬，有排富）\n3. 特別扣除額（一律可加減）\n   • 薪資、儲蓄投資、身心障礙、教育學費、幼兒學前、長期照顧、新青安房貸\n\n👉 列舉 與 標準 二擇一；特別扣除額 無論選哪個都可加',
+    source:'所得稅法§17 第1項第2款'
+  },
+
+  { id:'fk_t02', type:'條文', law:'所得稅法',
+    q:'列舉扣除額的常考「陷阱」？',
+    a:'⚠ 已受保險給付不得扣除：\n• 醫藥費：有理賠部分 不得扣除\n• 災害損失：有保險賠償或救濟金部分 不得扣除\n\n⚠ 必須給付「公立醫院／健保特約醫院」：\n• 美容、整型、坐月子中心 → 不得扣除\n\n⚠ 保險費限「直系」親屬：\n• 兄弟姊妹、其他親屬保費 → 不得扣除\n• 全民健保不受限額限制',
+    source:'所得稅法§17 第1項第2款'
+  },
+
+  { id:'fk_t03', type:'條文', law:'所得稅法',
+    q:'捐贈列舉扣除的「20% 限額」何時例外？',
+    a:'原則：捐贈總額 ≤ 綜合所得總額 × 20%\n\n例外（不受 20% 限額限制）：\n① 對「政府」之捐獻\n② 國防、勞軍 之捐贈\n③ 依特別法之捐贈（如文化藝術獎助條例、運動產業發展條例、私立學校法等）部分情形\n\n⚠ 注意：個人捐贈運動員專戶／指定特定運動員 的稅務處理 涉及運動產業發展條例§26-2 及贈與稅判斷，計算邏輯較複雜，請對照教材或函釋。\n\n（114 年 Q4：標準答案 (C) 列舉扣除額 500 萬、贈與稅 5.6 萬，Claude 不確定此題計算細節，請以教材為準）',
+    source:'所得稅法§17、§36；運動產業發展條例§26-2；114 年 Q4'
+  },
+
+  // ── 🟣 考題改編（1 張）──
+  { id:'fk_q01', type:'考題', law:'所得稅法',
+    q:'下列關於列舉扣除額的敘述，何者「錯誤」？\n(A) 醫藥生育費 → 限納稅義務人、配偶或受扶養親屬\n(B) 災害損失 → 限納稅義務人、配偶或受扶養直系親屬\n(C) 保險費 → 限納稅義務人、配偶或受扶養直系親屬\n(D) 捐贈 → 限納稅義務人、配偶及受扶養親屬',
+    a:'答案：(B)\n\n災害損失之適用對象 = 納稅義務人、配偶 或 受扶養 「親屬」（非限直系）\n\n口訣：\n• 「限直系」：保險費\n• 「不限直系」：捐贈、醫藥生育、災害損失\n\n（113 年 Q4）',
+    source:'所得稅法§17；113 年 Q4'
+  },
+
+  // ════════════════════════════════════════
+  //  拋棄繼承扣除額計算（5年內考3次）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字／規則類（2 張）──
+  { id:'fl_n01', type:'數字', law:'遺產贈與稅法',
+    q:'§17 遺產稅扣除額各項金額（最新 113 年起）？',
+    a:'1. 配偶扣除額：553 萬\n2. 直系血親卑親屬：每人 56 萬\n   • 未成年：按距成年年數，每年加扣 56 萬\n3. 父母扣除額：每人 138 萬\n4. 重度身心障礙 / 嚴重病人：每人 加扣 693 萬\n5. 受扶養兄弟姊妹、祖父母：每人 56 萬\n6. 喪葬費：138 萬\n7. 死亡前 6~9 年內繼承財產：按 80/60/40/20% 遞減扣\n\n⚠ 金額會隨物價指數調整，請依當年公告',
+    source:'遺產贈與稅法§17（113 年公告數）'
+  },
+
+  { id:'fl_n02', type:'數字', law:'遺產贈與稅法',
+    q:'死亡前繼承之財產，已納遺產稅者，如何扣除？',
+    a:'分兩種規定：\n\n§16 第1項第10款（不計入遺產總額）：\n• 死亡前 5 年內 繼承之財產 已納遺產稅者\n  → 100% 不計入遺產總額\n\n§17 第1項第7款（按年遞減扣除）：\n• 死亡前 6 年內：80%\n• 死亡前 7 年內：60%\n• 死亡前 8 年內：40%\n• 死亡前 9 年內：20%\n• 死亡前 10 年以上：不扣\n\n（114 年 Q25：(A)「死亡前 6 年內繼承之財產已納遺產稅者，可全數不計入遺產課稅」錯誤，6 年內按 80% 扣，不是全數不計入）',
+    source:'遺產贈與稅法§16、§17；114 年 Q25'
+  },
+
+  // ── 🟠 條文／辨識類（2 張）──
+  { id:'fl_t01', type:'條文', law:'遺產贈與稅法',
+    q:'「拋棄繼承」對扣除額有什麼影響？',
+    a:'§17 第2項：繼承人中拋棄繼承權者，「不適用」§17 第1項第1款至第5款規定之扣除\n\n→ 拋棄者本人「該人別」之扣除額消失\n  例：3 子女均拋棄 → 直系卑親屬之 56×3 = 168 萬 消失？\n\n⚠ 例外（§17 第1項第2款但書）：\n• 親等近者拋棄繼承，由次親等卑親屬繼承者，扣除額「以拋棄繼承前原得扣除之數額為限」\n• 即：3 子女拋棄，孫子女繼承 → 扣除額按子女原額計算（不會因孫女多而增加）',
+    source:'遺產贈與稅法§17'
+  },
+
+  { id:'fl_t02', type:'條文', law:'遺產贈與稅法',
+    q:'配偶剩餘財產差額分配請求權（民§1030-1）的扣除？',
+    a:'依民法§1030-1，法定財產制消滅時（如死亡）：\n• 生存配偶可主張剩餘財產差額之 1/2\n• 該請求權金額可自遺產總額中「扣除」\n\n計算：\n• 雙方婚後財產 － 婚後債務 = 剩餘財產\n• 婚前財產、繼承所得、無償取得 不列入\n• 雙方剩餘財產差額之 1/2 為請求權\n\n⚠ 111 年 Q24：本題涉及配偶剩餘財產差額分配請求權\n（須由生存配偶主張，且於遺產稅申報時提出）',
+    source:'遺產贈與稅法§17-1；民法§1030-1'
+  },
+
+  // ── 🟣 考題改編（1 張）──
+  { id:'fl_q01', type:'考題', law:'遺產贈與稅法',
+    q:'A 早年喪偶，育有甲、乙、丙 3 名成年子女，再娶 18 歲妻，A 過世時甲乙丙均拋棄繼承，配偶扣除額及繼承人扣除額共多少？（111 年題目，當時金額：配偶 493、子女 50）',
+    a:'答案：B = 643 萬元\n\n計算：\n① 配偶（18 歲妻）扣除額 = 493 萬\n② 子女拋棄繼承後由孫女繼承\n  • §17 第1項第2款但書：扣除額以拋棄前原額為限\n  • = 3（甲乙丙原額）× 50 = 150 萬\n③ 合計 = 493 + 150 = 643 萬\n\n⚠ 注意：題目「配偶扣除額及繼承人扣除額」不含喪葬費\n（111 年 Q5；金額為當時數）',
+    source:'遺產贈與稅法§17；111 年 Q5'
+  },
+
+  // ════════════════════════════════════════
+  //  納稅者權利保護法（5年內考4次，113 年起密集）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字／規則類（1 張）──
+  { id:'fm_n01', type:'數字', law:'納稅者權利保護法',
+    q:'租稅規避之滯納金加徵率？',
+    a:'§7 第7項：滯納金 = 應補繳稅款 × 15%\n\n• 自原應繳期限屆滿次日起算，至填發繳款書之日止\n• 並 按日加計利息（郵儲 1 年期固定利率）\n\n⚠ 注意：\n• 原則：租稅規避「不另課」逃漏稅罰鍰（§7 第8項）\n• 例外：申報或調查時隱匿、虛偽陳述 → 另罰\n\n（114 年 Q23：(B) 加徵 10% 為錯誤，應為 15%）',
+    source:'納稅者權利保護法§7 第7、8項；114 年 Q23'
+  },
+
+  // ── 🟠 條文／辨識類（3 張）──
+  { id:'fm_t01', type:'條文', law:'納稅者權利保護法',
+    q:'「租稅規避」的定義與處理？',
+    a:'定義（§7 第3項）：\n納稅者為獲得租稅利益，「違背稅法立法目的」、「濫用法律形式」，以非常規交易達成與交易常規相當之經濟效果。\n\n處理：\n① 稅捐機關仍可成立租稅請求權（按實質課稅）\n② 加徵滯納金 15% ＋ 利息\n③ 原則不另罰逃漏稅\n④ 但隱匿、虛偽陳述時，改按逃漏稅處罰（114 年 Q23 (D)）\n\n👉 與「逃漏稅」的差別：規避是合法形式，但實質違反立法目的；逃漏是違法行為',
+    source:'納稅者權利保護法§7 第3、7、8項'
+  },
+
+  { id:'fm_t02', type:'條文', law:'納稅者權利保護法',
+    q:'納稅者調查時的權利保障（§13）？',
+    a:'納稅者於稅捐機關調查時：\n\n① 可委任「代理人」陪同備詢；代理人到場前可拒絕陳述\n② 得就調查過程「自行錄影、錄音」\n③ 稅捐機關因需要錄影、錄音 → 應告知被調查者\n④ 為維持秘密性，且經記明筆錄者 → 國稅局得拒絕當事人錄影錄音\n\n⚠ 國稅局「違法調查」取得之證據 → 原則不得作為認定基礎（§11）\n\n（113 年 Q24：(B) 「自行就調查過程錄影、錄音」屬正確）',
+    source:'納稅者權利保護法§11、§13；113 年 Q24'
+  },
+
+  { id:'fm_t03', type:'條文', law:'納稅者權利保護法',
+    q:'納保官（§20）的「適格申請人」？',
+    a:'納稅者權利保護官受理之案件，適格申請人為「受處分相對人」：\n\n✅ 適格：\n• 收貨人（對進口貨物課關稅）\n• 祭祀公業管理人（對祀產土地課地價稅）\n• 營業人（對境內銷售貨物課營業稅）\n• 受贈人（對贈與土地課土地增值稅）\n\n❌ 不適格：\n• 贈與土地之「原所有權人」（已非該稅之納稅義務人）\n\n（114 年 Q24：(B) 原土地所有權人非適格申請人）',
+    source:'納稅者權利保護法§20；114 年 Q24'
+  },
+
+  // ── 🟣 考題改編（1 張）──
+  { id:'fm_q01', type:'考題', law:'納稅者權利保護法',
+    q:'下列關於租稅規避之敘述，何者「錯誤」？\n(A) 指利用規範漏洞及法律形式安排，規避原應課稅之租稅構成要件\n(B) 應按補繳稅款加徵 10% 滯納金及利息\n(C) 加徵滯納金及利息後，不另課予逃漏稅處罰\n(D) 接受調查時對重要事項隱匿，致短漏核定稅捐，應改按逃漏稅處罰',
+    a:'答案：(B)\n\n依§7 第7項，租稅規避之滯納金 = 補繳稅款 × 15%（非 10%）\n\n• (A) 正確：濫用法律形式 → 規避\n• (C) 正確：原則不另處逃漏稅罰\n• (D) 正確：但書例外，隱匿時改按逃漏稅罰\n\n（114 年 Q23）',
+    source:'納稅者權利保護法§7；114 年 Q23'
+  },
+
+  // ════════════════════════════════════════
+  //  地價稅（5年內考4次）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字／規則類（3 張）──
+  { id:'fn_n01', type:'數字', law:'土地稅法',
+    q:'地價稅 一般用地 累進稅率（6 級）？',
+    a:'累進起點地價以下：10‰（基本稅率）\n\n超過累進起點地價，依「就其超過部分」課徵：\n• 未達 5 倍部分：15‰\n• 5~10 倍部分：25‰\n• 10~15 倍部分：35‰\n• 15~20 倍部分：45‰\n• 超過 20 倍部分：55‰（最高）\n\n👉 累進起點地價＝該縣市 7 公畝（700 m²）平均地價\n（不含工業／礦業／農業／免稅土地）\n\n（112 年 Q18：(A) 「未超過累進起點地價 5 倍者課 10‰」錯誤，應分段：起點以下 10‰、起點到 5 倍部分 15‰）',
+    source:'土地稅法§16；112 年 Q18'
+  },
+
+  { id:'fn_n02', type:'數字', law:'土地稅法',
+    q:'地價稅 特別稅率（一覽）？',
+    a:'• 自用住宅用地：2‰\n• 工業用地、加油站、停車場、海水浴場、公私立公園、動物園、體育場所、寺廟、教堂、宗教團體：10‰\n• 公共設施保留地（建築使用）：6‰\n• 公共設施保留地（未使用＋與使用中土地隔離）：免徵\n• 公有土地供公共使用：免徵\n\n（112 年 Q20：公設保留地供停車使用，1,000 萬 × 6‰ = 6 萬）',
+    source:'土地稅法§17~§19；112 年 Q20'
+  },
+
+  { id:'fn_n03', type:'數字', law:'土地稅法',
+    q:'地價稅 重要日期？',
+    a:'• 納稅義務基準日：每年 8 月 31 日\n  → 當日土地登記簿所載土地所有權人為納稅義務人\n• 課徵期間：1/1 ~ 12/31（全年）\n• 開徵：11 月\n• 繳納期：11/1 ~ 11/30\n• 申請日：地價稅開徵 40 日前（9 月 22 日）\n  → 自用住宅、減免申請須於此前提出，逾期次年才適用',
+    source:'土地稅法§40；112 年 Q17'
+  },
+
+  // ── 🟠 條文（1 張）──
+  { id:'fn_t01', type:'條文', law:'土地稅法',
+    q:'信託土地的地價稅與土增稅 納稅義務人？',
+    a:'地價稅（§3-1）：\n• 信託關係存續中 → 「受託人」為納稅義務人\n• 受託土地與委託人土地合併計算地價總額（按§16 計稅）\n• 但受益人非委託人，且符合特定條件 → 與受益人土地合併\n\n土增稅（§5-2）：\n• 受託人有償移轉、設定典權，或轉為自有土地 → 受託人為納稅義務人\n• 受託人依信託本旨移轉與委託人以外歸屬權利人 → 該歸屬權利人為納稅義務人\n\n（113 年 Q17：信託土地之地價稅 受託人乙為納稅義務人）',
+    source:'土地稅法§3-1、§5-2；113 年 Q17'
+  },
+
+  // ── 🟣 考題改編（1 張）──
+  { id:'fn_q01', type:'考題', law:'土地稅法',
+    q:'A 公司持有 1 筆都市計畫公共設施保留地，供其員工作停車使用，課稅總地價為 1,000 萬元，當年應繳納地價稅額為？',
+    a:'答案：B = 6 萬元\n\n計算：\n• 公共設施保留地 在「保留期間仍為建築使用」者 → 稅率 6‰（§19）\n• 1,000 萬 × 6‰ = 6 萬\n\n⚠ 易混淆：\n• 公設保留地「未使用且與使用中土地隔離」→ 免徵\n• 公設保留地「供建築（含停車場）使用」→ 6‰\n• 一般用地：10‰ 起跳\n\n（112 年 Q20）',
+    source:'土地稅法§19；112 年 Q20'
+  },
+
+  // ════════════════════════════════════════
+  //  統一發票／銷售憑證（5年內考4次）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  // ── 🟢 數字／規則類（2 張）──
+  { id:'fp_n01', type:'數字', law:'營業稅法',
+    q:'營業人 開立銷售憑證時限 重點？',
+    a:'• 買賣業：發貨時開立\n  ⚠ 發貨前已收貨款者 → 應於收款時開立\n• 旅宿業：結算時開立\n  ⚠ 已預收價款但未結算 → 暫不開立（114 年 Q15 (B) 正確）\n• 勞務承攬業：收款時開立\n• 租賃業：收款時開立\n• 分期付款：訂約時就總價開立（或按期）\n\n👉 大原則：「先收款先開」，但旅宿業因住宿未結算前未確認金額，暫不開立',
+    source:'營業稅法§32；114 年 Q15'
+  },
+
+  { id:'fp_n02', type:'數字', law:'營業稅法',
+    q:'發票 4 大類型與用法？',
+    a:'① 三聯式統一發票：銷售給營業人；可申報扣抵\n② 二聯式統一發票：銷售給非營業人（個人）；不能扣抵\n③ 收銀機發票：須經核准；零售業可用\n④ 電子發票：取代紙本，購買者可載入載具\n\n⚠ 注意：\n• 並非所有營業人皆可使用收銀機發票（須核准）\n• 載有營業人統一編號之發票 → 不參加兌獎\n• 二聯式發票銷售額計算：含稅÷1.05',
+    source:'營業稅法§32、§38；111 年 Q14、Q15'
+  },
+
+  // ── 🟠 條文（1 張）──
+  { id:'fp_t01', type:'條文', law:'營業稅法',
+    q:'統一發票兌獎相關規定？',
+    a:'✅ 可兌獎：\n• 二聯式發票（消費者用）\n\n❌ 不可兌獎：\n• 載有「營業人統一編號」之三聯式發票（屬營業人購買，已扣抵營業稅）\n• 載有「買受人統一編號」之收銀機發票（同上）\n• 經銷商間之獎勵金（屬折讓性質，開立折讓單而非發票）\n\n👉 大原則：可扣抵者 不可兌獎；不能扣抵者 才能兌獎\n\n（112 年 Q14：經銷家電取得獎勵金 → 開立「進貨退出或折讓證明單」）',
+    source:'營業稅法§32、§38；112 年 Q14'
+  },
+
+  // ── 🟣 考題改編（1 張）──
+  { id:'fp_q01', type:'考題', law:'營業稅法',
+    q:'下列何者「尚未屆」開立銷售憑證時限？\n(A) 買賣業發貨前已收貨款者\n(B) 旅宿業提供住宿服務已預收取價款尚未結算者\n(C) 勞務承攬業已收取報酬者\n(D) 租賃業已收取租金者',
+    a:'答案：(B)\n\n旅宿業提供住宿服務 → 結算時開立發票\n• 已預收價款但「尚未結算」→ 尚未屆時限，暫不開立\n• 因住宿天數、消費金額尚未確定\n\n(A)(C)(D) 都是「收款時 = 開立時」\n\n（114 年 Q15）',
+    source:'營業稅法§32；114 年 Q15'
+  },
+
+  // ════════════════════════════════════════
+  //  自動補報補繳 §48-1
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  { id:'fq_n01', type:'數字', law:'稅捐稽徵法',
+    q:'§48-1 自動補報補繳的「免罰要件」？',
+    a:'4 大要件（缺一不可）：\n\n① 在 經人檢舉、稽徵機關 或 財政部指定 之調查人員 進行調查前\n② 主動向稅捐稽徵機關 補報、補繳\n③ 適用範圍：所得稅法、營業稅法、貨物稅、菸酒稅 等\n④ 應加計利息（自原繳納期限屆滿次日起算至補繳之日止，按日加計）\n\n效果：\n• 免處該稅法的「漏稅罰」\n• 涉及刑事責任者 → 亦免除其刑（114 年 Q22 (C) 錯誤）\n• 但 並非「全部」免罰（如行為罰仍會有）',
+    source:'稅捐稽徵法§48-1；114 年 Q22'
+  },
+
+  { id:'fq_q01', type:'考題', law:'稅捐稽徵法',
+    q:'依§48-1 自動補報補繳免罰之敘述，何者「錯誤」？\n(A) 須在經檢舉或稅捐機關調查前為之\n(B) 不論納稅義務人故意或過失逃漏稅，均有適用\n(C) 逃漏稅涉及刑事責任者，不得免除其刑\n(D) 應就補繳稅款，自原繳納期限截止次日起，至補繳之日止，按日加計利息',
+    a:'答案：(C)\n\n§48-1 規定：自動補報補繳者，免除刑事責任\n→ 涉及刑責者 亦免除其刑\n\n• (A) 正確：必須在調查前\n• (B) 正確：故意或過失均適用\n• (D) 正確：按日加計利息\n\n（114 年 Q22）',
+    source:'稅捐稽徵法§48-1；114 年 Q22'
+  },
+
+  // ════════════════════════════════════════
+  //  行政救濟（復查、訴願、行政訴訟）
+  //  Claude 整理，請對照教材確認
+  // ════════════════════════════════════════
+
+  { id:'fr_n01', type:'數字', law:'稅捐稽徵法',
+    q:'稅捐行政救濟 三階段及期限？',
+    a:'1️⃣ 復查（§35）\n• 對「核定稅捐處分」不服\n• 期限：\n  - 有應納／應補徵稅額者：自「繳納期間屆滿翌日」起 30 日內\n  - 無應納稅額之核定通知書：自「送達後」 30 日內\n• 向「原處分機關」申請\n• 郵寄者以「郵戳日期」為準\n\n2️⃣ 訴願\n• 對復查決定不服\n• 期限：復查決定書送達次日起 30 日內\n• 向「財政部訴願會」提起\n\n3️⃣ 行政訴訟\n• 對訴願決定不服\n• 期限：訴願決定書送達次日起 2 個月內\n• 向「高等行政法院」提起',
+    source:'稅捐稽徵法§35；訴願法、行政訴訟法'
+  },
+
+  { id:'fr_t01', type:'條文', law:'稅捐稽徵法',
+    q:'復查（§35）關鍵規則？',
+    a:'✅ 申請復查 不必先繳稅\n（已修法廢除「先繳半數」之要件）\n\n復查期限（依稅單類型）：\n• 有應納／應補徵稅額者：自「繳納期間屆滿翌日」起 30 日內\n• 無應納稅額之核定通知書：自「送達後」 30 日內\n\n• 機關：原處分稅捐稽徵機關\n• 形式：書面，須附理由與證據\n• 郵寄：以「郵戳日期」為準\n\n⚠ 常考陷阱（111 年 Q23）：\n• (A)「應先繳納 1/2 才得受理」→ 錯，已修法\n• (B)「自收到繳款書翌日起算 30 日內」→ 錯，應為「繳納期間屆滿翌日」\n• (C)「郵寄者以郵戳日期為準」→ 正確 ✓\n• (D) 對「不得移轉或設定他項權利處分」不服 → 非復查標的',
+    source:'稅捐稽徵法§35；111 年 Q23'
+  },
+
+  { id:'fr_t02', type:'條文', law:'稅捐稽徵法',
+    q:'§39「暫緩移送強制執行」的事由？',
+    a:'§39 第1項：已依§35 申請復查 → 自動暫緩（不必繳稅）\n\n§39 第2項：復查決定後仍欲暫緩，須符合下列之一：\n① 對復查決定應納稅額 繳納 1/3，並依法提起訴願\n② 繳 1/3 確有困難 → 經機關核准 提供 相當擔保\n③ 繳 1/3 與提供擔保 均有困難 → 機關依§24 第1項第1款 已就「相當於復查決定應納稅額」之 全部 財產，通知有關機關 不得移轉或設定他項權利\n\n⚠ 114 年 Q21 (D)：「就應納稅額 1/3 之財產」通知不得移轉 → 錯誤！\n（條文是「相當於應納稅額」全額之財產，非 1/3）',
+    source:'稅捐稽徵法§39 第2項；114 年 Q21'
+  },
+];
+
+/**
+ * 條文瀏覽資料格式：
+ * {
+ *   law: '所得稅法及所得基本稅額條例',
+ *   chapters: [
+ *     {
+ *       name: '第一章 總則',
+ *       statutes: [
+ *         { label: '第1條', text: '條文內容...' }
+ *       ]
+ *     }
+ *   ]
+ * }
+ */
+// 條文連結：點擊跳到全國法規資料庫
+const STATUTE_LINKS = [
+  { law:'所得稅法',              icon:'📘', pcode:'G0340003' },
+  { law:'所得基本稅額條例',        icon:'📗', pcode:'G0340115' },
+  { law:'加值型及非加值型營業稅法', icon:'📙', pcode:'G0340080' },
+  { law:'土地稅法',              icon:'🏞️', pcode:'G0340096' },
+  { law:'稅捐稽徵法',            icon:'⚖️', pcode:'G0340001' },
+  { law:'納稅者權利保護法',        icon:'🛡️', pcode:'G0340142' },
+  { law:'遺產及贈與稅法',         icon:'📜', pcode:'G0340072' },
+];
+
+// ════════════════════════════════════════════════
+//  LocalStorage
+// ════════════════════════════════════════════════
+const LS_WRONG  = 'tax_wrong_ids';
+const LS_FC     = 'tax_fc_score';
+
+function getWrongIds() {
+  try { return JSON.parse(localStorage.getItem(LS_WRONG)) || []; } catch { return []; }
+}
+function setWrongIds(ids) {
+  localStorage.setItem(LS_WRONG, JSON.stringify([...new Set(ids)]));
+}
+function addWrong(id) { setWrongIds([...getWrongIds(), id]); }
+function removeWrong(id) { setWrongIds(getWrongIds().filter(x => x !== id)); }
+function isWrong(id) { return getWrongIds().includes(id); }
+
+function getFcScore() {
+  try { return JSON.parse(localStorage.getItem(LS_FC)) || {}; } catch { return {}; }
+}
+function setFcScore(obj) { localStorage.setItem(LS_FC, JSON.stringify(obj)); }
+
+// ════════════════════════════════════════════════
+//  TAB SWITCHER
+// ════════════════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const idx = ['quiz','flashcard','statute'].indexOf(name);
+  document.querySelectorAll('nav.tabs button')[idx].classList.add('active');
+  if (name === 'flashcard') renderFlashcard();
+  if (name === 'statute') renderStatute();
+  if (name === 'quiz') applyFilters();
+}
+
+// ════════════════════════════════════════════════
+//  QUIZ
+// ════════════════════════════════════════════════
+let filteredQuestions = [];
+let currentQIndex = 0;
+let wrongOnlyMode = false;
+
+const CHAPTER_MAP = {
+  '所得稅法': ['總則','綜合所得稅','營利事業所得稅','稽徵程序','獎懲','賦稅減免','所得基本稅額條例','國際租稅'],
+  '營業稅法': ['總則','減免範圍','稅率','稅額計算','稽徵','罰則'],
+  '土地稅法': ['總則','地價稅','田賦','土地增值稅','稽徵程序','罰則'],
+  '稅捐稽徵法': ['總則','納稅義務','稽徵','行政救濟','強制執行','罰則','納稅者權利保護法'],
+  '遺產贈與稅法': ['總則','遺產稅之計算','贈與稅之計算','稽徵程序','獎懲'],
+};
+
+document.getElementById('q-law').addEventListener('change', function() {
+  const chSel = document.getElementById('q-chapter');
+  chSel.innerHTML = '<option value="">全部章節</option>';
+  const chapters = CHAPTER_MAP[this.value] || [];
+  chapters.forEach(c => {
+    const o = document.createElement('option');
+    o.value = c; o.textContent = c;
+    chSel.appendChild(o);
+  });
+  applyFilters();
+});
+
+function applyFilters() {
+  const law = document.getElementById('q-law').value;
+  const ch  = document.getElementById('q-chapter').value;
+  const wrongIds = getWrongIds();
+
+  filteredQuestions = QUIZ_DATA.filter(q => {
+    if (law && q.law !== law) return false;
+    if (ch  && q.chapter !== ch) return false;
+    if (wrongOnlyMode && !wrongIds.includes(q.id)) return false;
+    return true;
+  });
+
+  document.getElementById('q-count-label').textContent = `共 ${filteredQuestions.length} 題`;
+  currentQIndex = 0;
+  renderQuiz();
+}
+
+function toggleWrongOnly() {
+  wrongOnlyMode = !wrongOnlyMode;
+  const t = document.getElementById('wrong-toggle');
+  t.classList.toggle('on', wrongOnlyMode);
+  applyFilters();
+}
+
+function renderQuiz() {
+  const area = document.getElementById('quiz-area');
+  if (filteredQuestions.length === 0) {
+    area.innerHTML = `<div class="empty-state"><div class="icon">${wrongOnlyMode ? '🎉' : '📭'}</div><p>${wrongOnlyMode ? '目前沒有錯題記錄！' : '考古題尚未匯入<br><small style="font-size:.75rem;opacity:.7;">請填入 QUIZ_DATA 陣列</small>'}</p></div>`;
+    return;
+  }
+  const q = filteredQuestions[currentQIndex];
+  const pct = Math.round(((currentQIndex + 1) / filteredQuestions.length) * 100);
+  const wrongBadge = isWrong(q.id) ? `<span class="tag tag-wrong">錯題</span>` : '';
+
+  area.innerHTML = `
+    <div class="quiz-progress">${currentQIndex + 1} / ${filteredQuestions.length}</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="quiz-card">
+      <div class="quiz-meta">
+        <span class="tag tag-law">${q.law}</span>
+        <span class="tag tag-year">${q.year || ''} 年</span>
+        <span class="tag tag-law" style="background:var(--paper-dark);color:var(--slate);border-color:var(--border);">${q.chapter}</span>
+        ${wrongBadge}
+      </div>
+      <div class="quiz-q">${q.q}</div>
+      <div class="options">
+        ${q.options.map((opt, i) =>
+          `<button class="option-btn" id="opt-${i}" onclick="selectOption(${i})">${String.fromCharCode(65+i)}. ${opt}</button>`
+        ).join('')}
+      </div>
+      ${q.explain ? `<div class="quiz-explain" id="quiz-explain">${q.explain}</div>` : ''}
+    </div>
+    <div class="quiz-nav">
+      <button class="btn btn-outline" onclick="navQ(-1)" ${currentQIndex===0?'disabled':''}>← 上題</button>
+      <button class="btn btn-outline" onclick="navQ(1)"  ${currentQIndex===filteredQuestions.length-1?'disabled':''}>下題 →</button>
+    </div>
+  `;
+  updateStats();
+}
+
+function selectOption(chosen) {
+  const q = filteredQuestions[currentQIndex];
+  document.querySelectorAll('.option-btn').forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.answer) b.classList.add('correct');
+    else if (i === chosen && chosen !== q.answer) b.classList.add('wrong');
+  });
+  if (chosen === q.answer) {
+    removeWrong(q.id);
+  } else {
+    addWrong(q.id);
+  }
+  const ex = document.getElementById('quiz-explain');
+  if (ex) ex.classList.add('show');
+  updateStats();
+}
+
+function navQ(dir) {
+  currentQIndex = Math.max(0, Math.min(filteredQuestions.length - 1, currentQIndex + dir));
+  renderQuiz();
+}
+
+// ════════════════════════════════════════════════
+//  FLASHCARD
+// ════════════════════════════════════════════════
+let fcFilter = 'all';
+let fcDeck = [];
+let fcIndex = 0;
+let fcFlipped = false;
+
+function setFcFilter(type, btn) {
+  fcFilter = type;
+  document.querySelectorAll('.fc-tag-btn').forEach(b => {
+    b.classList.remove('active-all','active-num','active-text','active-quiz');
+  });
+  if (type === 'all') btn.classList.add('active-all');
+  else if (type === '數字') btn.classList.add('active-num');
+  else if (type === '條文') btn.classList.add('active-text');
+  else if (type === '考題') btn.classList.add('active-quiz');
+  renderFlashcard();
+}
+
+function renderFlashcard() {
+  const lawF = document.getElementById('fc-law-filter').value;
+  fcDeck = FLASHCARD_DATA.filter(c => {
+    if (fcFilter !== 'all' && c.type !== fcFilter) return false;
+    if (lawF && c.law !== lawF) return false;
+    return true;
+  });
+  fcIndex = 0;
+  fcFlipped = false;
+  showFcCard();
+}
+
+function showFcCard() {
+  const inner = document.getElementById('fc-inner');
+  inner.classList.remove('flipped');
+  fcFlipped = false;
+  document.getElementById('fc-actions').style.display = 'none';
+
+  if (fcDeck.length === 0) {
+    document.getElementById('fc-empty').style.display = 'block';
+    document.getElementById('fc-counter').style.display = 'none';
+    document.getElementById('fc-front').style.opacity = '.4';
+    document.getElementById('fc-q').textContent = '目前篩選條件下無字卡';
+    document.getElementById('fc-a').textContent = '';
+    updateFcScore();
+    return;
+  }
+
+  document.getElementById('fc-empty').style.display = 'none';
+  document.getElementById('fc-counter').style.display = 'block';
+  document.getElementById('fc-front').style.opacity = '1';
+
+  const c = fcDeck[fcIndex];
+  const badgeMap = { '數字': '🟢 數字', '條文': '🟠 條文', '考題': '🟣 考題改編' };
+  document.getElementById('fc-type-badge').textContent = badgeMap[c.type] || c.type;
+  document.getElementById('fc-q').textContent = c.q;
+  document.getElementById('fc-a').textContent = c.a;
+  document.getElementById('fc-source').textContent = c.source || '';
+  document.getElementById('fc-counter').textContent = `字卡 ${fcIndex + 1} / ${fcDeck.length}`;
+
+  const pct = fcDeck.length > 1 ? (fcIndex / (fcDeck.length - 1)) * 100 : 100;
+  document.getElementById('fc-progress').style.width = pct + '%';
+
+  updateFcScore();
+}
+
+function flipCard() {
+  if (fcDeck.length === 0) return;
+  fcFlipped = !fcFlipped;
+  document.getElementById('fc-inner').classList.toggle('flipped', fcFlipped);
+  document.getElementById('fc-actions').style.display = fcFlipped ? 'flex' : 'none';
+}
+
+function fcAnswer(know) {
+  const c = fcDeck[fcIndex];
+  const score = getFcScore();
+  score[c.id] = know ? 1 : 0;
+  setFcScore(score);
+  updateFcScore();
+  setTimeout(() => { fcSkip(1); }, 300);
+}
+
+function fcSkip(dir) {
+  fcIndex = (fcIndex + dir + fcDeck.length) % fcDeck.length;
+  showFcCard();
+}
+
+function shuffleFc() {
+  for (let i = fcDeck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [fcDeck[i], fcDeck[j]] = [fcDeck[j], fcDeck[i]];
+  }
+  fcIndex = 0;
+  showFcCard();
+}
+
+function updateFcScore() {
+  const score = getFcScore();
+  const relevant = fcDeck.map(c => score[c.id]);
+  const know = relevant.filter(v => v === 1).length;
+  const dk   = relevant.filter(v => v === 0).length;
+  document.getElementById('fc-know').textContent = know;
+  document.getElementById('fc-dk').textContent = dk;
+
+  // update header stat
+  const total = Object.values(getFcScore()).filter(v => v === 1).length;
+  document.getElementById('stat-fc').textContent = total;
+}
+
+// ════════════════════════════════════════════════
+//  STATUTE BROWSER
+// ════════════════════════════════════════════════
+function renderStatute() {
+  const tree = document.getElementById('statute-tree');
+  tree.innerHTML = STATUTE_LINKS.map(item => `
+    <a class="law-link-card"
+       href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=${item.pcode}"
+       target="_blank" rel="noopener noreferrer">
+      <span class="law-link-icon">${item.icon}</span>
+      <span class="law-link-name">${item.law}</span>
+      <span class="law-link-arrow">↗</span>
+    </a>
+  `).join('');
+}
+
+// ════════════════════════════════════════════════
+//  STATS
+// ════════════════════════════════════════════════
+function updateStats() {
+  const wrongIds = getWrongIds();
+  const answeredWrong = QUIZ_DATA.filter(q => wrongIds.includes(q.id)).length;
+  const correct = QUIZ_DATA.length - answeredWrong; // rough approximation
+  document.getElementById('stat-wrong-count').textContent = answeredWrong;
+  document.getElementById('stat-correct').textContent =
+    QUIZ_DATA.length > 0 ? QUIZ_DATA.length - answeredWrong : 0;
+}
+
+// ════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════
+applyFilters();
+updateStats();
+updateFcScore();
+</script>
+</body>
+</html>
